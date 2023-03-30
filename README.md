@@ -16,7 +16,7 @@ project
     │
     ├───api
     │       __init__.py
-    │       api.py          
+    │       endpoints.py          
     │
     ├───core
     │   │   __init__.py
