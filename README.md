@@ -1,6 +1,38 @@
 # web-noc
 Веб-сервис НОЦ
 
+## Как запустить проект
+
+1. Скачайте и разархивируйте проект.
+2. Установите все библиотеки из файла `requirements.txt` с помощью команды `pip install -r requirements.txt`.
+3. Создайте файл `launch.json` (если пишете в Visual Studio Code), где нужно прописать переменные окружения `MONGO_USER`, `MONGO_PASSWORD`, `DB`. Пример содержимого файла:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: FastAPI",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "main:app",
+                "--reload"
+            ],
+            "env": {
+                "MONGO_USER": "<your_mongo_user>",
+                "MONGO_PASSWORD": "<your_mongo_password>",
+                "DB": "<your_db_name>"
+            }
+        }
+    ]
+}
+```
+
+4. Запустите файл `main.py` с этими переменными окружения с помощью команды `python main.py` или нажатием на зеленую кнопку Run в Visual Studio Code.
+5. В консоли появится ссылка http://127.0.0.1:8000, её и нужно открыть в браузере.
+
 
 ## Архитектура сайта
 
