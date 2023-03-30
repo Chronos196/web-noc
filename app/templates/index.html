@@ -8,9 +8,9 @@
 </head>
 <body>
     <h1>Пока так</h1>
-    <form action="succes_upload.html">
-        <input type="file" id="myFile" name="filename">
-        <input type="submit">
+    <form action="/upload_file" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
     </form>
 </body>
 </html>
