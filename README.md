@@ -12,14 +12,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: FastAPI",
+            "name": "Python: текущий файл",
             "type": "python",
             "request": "launch",
-            "module": "uvicorn",
-            "args": [
-                "main:app",
-                "--reload"
-            ],
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
             "env": {
                 "MONGO_USER": "<your_mongo_user>",
                 "MONGO_PASSWORD": "<your_mongo_password>",
