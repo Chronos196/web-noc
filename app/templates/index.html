@@ -1,16 +1,220 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-</head>
-<body>
-    <h1>Пока так</h1>
-    <form action="/upload_file" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Upload">
-    </form>
-</body>
+<html>
+    <head>
+        <title>НОЦ Аналитика</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header>
+            <nav class="site-navigation">
+                <div class="site-title">
+                    <h1>НОЦ</h1>
+                    <h3>Аналитика</h3>
+                </div>
+                <ul class="nav-items">
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link" id="nav-item-1">
+                            <img src="img/category.svg" class="nav-item-icon" width="18px" height="18px">
+                            <span>Статистика</span>
+                            <img src="img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link" id="nav-item-2">
+                            <img src="img/square.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>НОЦ</span>
+                            <img src="img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link" id="nav-item-3">
+                            <img src="img/chart.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>Направления</span>
+                            <img src="img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link" id="nav-item-4">
+                            <img src="img/calendar.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>Проекты</span>
+                            <img src="img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link" id="nav-item-5">
+                            <img src="img/chat.svg" class="nav-item-icon"   width="18px" height="18px">
+                            <span>Входящие заявки</span>
+                            <img src="img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="top-content">
+                <div class="top-menu">
+                    <div class="search">
+                        <input type="text" placeholder="Поиск">
+                        <img src="img/search.svg" height="25px" width="25px" class="search-icon">
+                    </div>
+                    <button id="add_request">Добавить заявку</button>
+                    <div class="profile">
+                        <span>Фамилия <br> Имя</span>
+                        <img src="img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                    </div>
+                </div>
+            </section>
+            <section class="left-content">
+                <a href="#" id="back_link">&#706; Проекты</a>
+                <div class="project_info">
+                <div class="project_name">
+                    <p>Направление: <b>Новые технологии</b></p>
+                    <h1>Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов</h1>
+                </div>
+                <div class="name_organisation left_cont_div">
+                    <h3>Наименование организации</h3>
+                    <p>Общество с ограниченной ответственностью «АКСАЛИТ Софт»</p>
+                </div>
+                <div class="project_cost left_cont_div">
+                    <h3>Стоимость проекта</h3>
+                    <p class="total_cost">250 млн. руб</p>
+                    <table class="cost_table">
+                        <tr>
+                            <td class="cost">15к</td>
+                            <td class="cost_name">бюджет</td>
+                        </tr>
+                        <tr>
+                            <td class="cost">9к</td>
+                            <td class="cost_name">Внебюджет</td>
+                        </tr>
+                        <tr>
+                            <td class="cost">6к</td>
+                            <td class="cost_name">Местные источники</td>
+                        </tr>
+                    </table>
+                    <a href="#" download="" class="download_link">Скачать <b>.pdf</b></a>
+                </div>
+                <div class="project_market left_cont_div">
+                    <h3>Рынок проекта</h3>
+                    <p><b>Федеральный</b></p>
+                </div>
+                <div class="director left_cont_div">
+                    <h3>Руководитель</h3>
+                    <p><b>Директор</b></p>
+                    <p>Яковлева Оксана Александровна</p>
+                </div>
+                <div class="implem_period left_cont_div">
+                    <h3>Срок реализации</h3>
+                    <p><b>Даты: <data>04.03.2019 - 03.08.2020</data></b></p>
+                    <p class="implem_period_info">Экспериментальные разработки</p>
+                </div>
+                <div class="project_objective left_cont_div">
+                  <h3>Цель проекта</h3>
+                  <p>Автоматизация процесса сортировки твердых бытовых отходов позволит повысит производительность мусоросортировочных комплексов – увеличит процент отбора материалов для вторичного использования, тем самым сократив долю неперерабатываемого мусора в несколько раз.</p>
+                </div>
+                <div class="justifi_need left_cont_div">
+                    <h3>Обоснование необходимости проекта</h3>
+                    <p><b>Проблемы:</b></p>
+                    <ol>
+                        <li>отсутствие культуры сортировки мусора жителей городов;</li>
+                        <li>высокий процент неперерабатываемого мусора на мусоросортировочных комплексах;</li>
+                        <li>дорогостоящее импортное оборудование</li>
+                    </ol>
+                    <p><b>Возможности:</b></p>
+                    <p>В проекте участвуют признанные эксперты из разных областей. Компания «АКСАЛИТ Софт» является экспертом в области анализа изображений на видеопотоке. ОАО «ПО «УОМЗ» производит оптико-электронные системы различного назначения. АО «ПНО «Орион» специализируется на разработке и выпуске изделий микрофотоэлектроники для оснащения оптико-электронных систем и комплексов в интересах науки промышленности, обороны, космической и других отраслей.</p>
+                </div>
+                <div class="project_result left_cont_div">
+                    <h3>Результат проекта</h3>
+                    <p>Конечным продуктом проекта является оптический сепаратор со следующими конкурентными преимуществами: </p>
+                    <ol>
+                        <li>100% разделение всех видов пластика;</li>
+                        <li>размер определяемой фракции от 10 до 300 мм;</li>
+                        <li>производительность 2-8 тонн в час;</li>
+                        <li>средняя потребляемая мощность 8 кВт/ч;</li>
+                        <li>отечественное производство;</li>
+                        <li>доступность цены по сравнению с зарубежными аналогами</li>
+                    </ol>
+                </div>
+                <div class="project_consumers left_cont_div">
+                    <h3>Потребители проекта</h3>
+                    <p>Основными потребителями являются мусоросортировочные комплексы и предприятия по переработке вторичного сырья со всей страны.</p>
+                </div>
+                </div>
+            </section>
+            <section class="right-content">
+                <h2>Сводные данные</h2>
+                <div class="uniqueness_col">
+                    <img src="img/question_mark.svg" class="question-mark"  title="Подробная информация" width="21px" height="21px">
+                    <h3 class="uniqueness_col_title">Полезность</h3>
+                    <table сlass="uniqueness_col_table">
+                        <tr>
+                            <td class="project_crit no_standart_td">Статистика по Scopus</td>
+                            <td class="no_standart_td">
+                                <div class="chart">
+                                    <div class="x-axis"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="project_crit no_standart_td">Количество исследований по данной теме</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="uniqueness_col">
+                    <img src="img/question_mark.svg" class="question-mark" title="Подробная информация" width="21px" height="21px">
+                    <h3 class="uniqueness_col_title">Уникальность</h3>
+                    <table сlass="uniqueness_col_table">
+                        <tr>
+                            <td class="project_crit no_standart_td">Пересечение тем</td>
+                            <td class="value_project_crit no_standart_td">2 совпадения</td>
+                        </tr>
+                        <tr>
+                            <td class="project_crit no_standart_td">Проектов по направлению</td>
+                            <td class="value_project_crit no_standart_td">5 проектов</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="uniqueness_col">
+                    <img src="img/question_mark.svg" class="question-mark" title="Подробная информация" width="21px" height="21px">
+                    <h3 class="uniqueness_col_title">Реализуемость</h3>
+                    <table сlass="uniqueness_col_table">
+                        <tr>
+                            <td class="project_crit no_standart_td">Сроки реализации</td>
+                            <td class="value_project_crit_data no_standart_td">2019 - 2020 год</td>
+                        </tr>
+                        <tr>
+                            <td class="project_crit no_standart_td">Стадия работы</td>
+                            <td class="progress_bar no_standart_td">
+                                <div class="progress-bar">
+                                    <div class="progress">
+                                      <span class="progress-text">54%</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="project_crit no_standart_td">Требуемый бюджет</td>
+                            <td class="value_project_crit no_standart_td">250 млн. руб</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+
+        <div id="blackout"></div>
+        <div id="form">
+            <form action="your_server_url" method="post" enctype="multipart/form-data">
+                <p>Перенесите документ</p>
+                <label for="file-upload" class="custom-file-upload">
+                    <img src="img/download.svg" alt="Upload Image" width="106px" height="106px">
+                    <p>Загрузите документ в формате<br> <b>.pdf</b> или <b>.doc</b></p>
+                  </label>
+                  <input type="file" id="file-upload" name="files" accept=".pdf,.doc,.docx">
+                <div class="form_buttons">
+                    <button class="fill_form_butn">ЗАПОЛНИТЬ ФОРМУ</button>
+                    <input class="send_doc_butn" type="submit" value="ОТПРАВИТЬ ДОКУМЕНТ">
+                </div>
+            </form>
+        </div>
+        <script src="src/script.js"></script>
+    </body>
 </html>
