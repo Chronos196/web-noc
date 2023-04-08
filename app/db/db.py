@@ -8,5 +8,5 @@ db = cluster[DB]
 users = db['users']
 files = db['files']
 
-def save_file_name(name):
-    files.insert_one({'name': name})
+def save_file(file):
+    files.insert_one(file)

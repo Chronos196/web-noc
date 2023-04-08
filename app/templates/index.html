@@ -202,13 +202,13 @@
 
         <div id="blackout"></div>
         <div id="form">
-            <form action="your_server_url" method="post" enctype="multipart/form-data">
+            <form action="/upload_file" method="post" enctype="multipart/form-data">
                 <p>Перенесите документ</p>
                 <label for="file-upload" class="custom-file-upload">
                     <img src="../static/img/download.svg" alt="Upload Image" width="106px" height="106px">
                     <p>Загрузите документ в формате<br> <b>.pdf</b> или <b>.doc</b></p>
                   </label>
-                  <input type="file" id="file-upload" name="files" accept=".pdf,.doc,.docx">
+                  <input type="file" id="file-upload" name="file" accept=".pdf,.doc,.docx">
                 <div class="form_buttons">
                     <button class="fill_form_butn" type="button">ЗАПОЛНИТЬ ФОРМУ</button>
                     <input class="send_doc_butn" type="submit" value="ОТПРАВИТЬ ДОКУМЕНТ">
