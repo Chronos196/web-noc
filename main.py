@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from app.api.endpoints import router
 from fastapi.staticfiles import StaticFiles
-from pathlib import Path
 
 from uvicorn import Server, Config
 
