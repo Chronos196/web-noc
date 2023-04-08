@@ -69,6 +69,7 @@ project
     └───db
             __init__.py
             db.py
+            models.py
 
 ```
 
