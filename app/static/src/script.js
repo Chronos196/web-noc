@@ -49,15 +49,15 @@ form.addEventListener('submit', function(event) {
         var jsonText = JSON.parse(xhr.responseText);
         if (jsonText['status'] === "Success") {
             var text = form.querySelector('.form-text');
-            text.textContent = "Файл " + jsonText["filename"] + " был успешно отправлен";
+            text.innerHTML = `Файл <b>${jsonText["filename"]}</b> был успешно отправлен`;
         } 
         else if (jsonText['status'] === "EmptyFile"){
             var text = form.querySelector('.form-text');
-            text.textContent = 'Вы не выбрали файл, либо он оказался пустым'
+            text.innerHTML = `<font color='red'>Вы не выбрали файл, либо он оказался пустым</font>`;
         }
         else if (jsonText['status'] === "TooMuch"){
             var text = form.querySelector('.form-text');
-            text.textContent = "Файл " + jsonText["filename"] + " превышает допустимый размер";
+            text.innerHTML = `<font color='red'>Файл <b>${jsonText["filename"]}</b> превышает допустимый размер</font>`;
         }
         form.reset();
     };
