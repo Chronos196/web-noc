@@ -7,6 +7,8 @@ const fileUpload = document.querySelector('#file-upload');
 const fileUploadLabel = document.querySelector('.custom-file-upload');
 const fileUploadLabelText = document.querySelector('.custom-file-upload p');
 
+var form = document.querySelector('form');
+
 fileUpload.addEventListener('change', () => {
     if (fileUpload.files.length > 0) {
       const fileName = fileUpload.files[0].name;
@@ -17,6 +19,8 @@ fileUpload.addEventListener('change', () => {
 addReqButton.addEventListener('click', () => {
     blackoutForm.style.display = 'block';
     addReqForm.style.display = 'block';
+    var text = form.querySelector('.form-text');
+    text.innerHTML = 'Загрузите документ в формате<br> <b>.pdf</b> или <b>.doc</b>';
 });
 
 
@@ -29,16 +33,36 @@ menuElements.forEach(element => {
     element.addEventListener('click', () => {
         menuElements.forEach(el => el.classList.remove('active'));
         element.classList.add('active');
-        localStorage.setItem('selectedElement', element.id);
     });
 });
 
-window.addEventListener('load', () => {
-    const selectedElement = localStorage.getItem('selectedElement');
-    if (selectedElement){
-        document.querySelector(`#${selectedElement}`).classList.add('active');
-    }
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload_file');
+    xhr.send(formData);
+    xhr.onload = function() {
+        var jsonText = JSON.parse(xhr.responseText);
+        if (jsonText['status'] === "Success") {
+            var text = form.querySelector('.form-text');
+            text.textContent = "Файл " + jsonText["filename"] + " был успешно отправлен";
+        } 
+        else if (jsonText['status'] === "EmptyFile"){
+            var text = form.querySelector('.form-text');
+            text.textContent = 'Вы не выбрали файл, либо он оказался пустым'
+        }
+        else if (jsonText['status'] === "TooMuch"){
+            var text = form.querySelector('.form-text');
+            text.textContent = "Файл " + jsonText["filename"] + " превышает допустимый размер";
+        }
+        form.reset();
+    };
 });
+
 
 // Граф
 var values = [35, 41, 31, 40, 27];
