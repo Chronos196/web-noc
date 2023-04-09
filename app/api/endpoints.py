@@ -28,13 +28,13 @@ async def upload_file(file: UploadFile = File(...)):
     file.file.seek(0)
 
     if file.filename == '':
-        return {"error": "Файл пустой"}
+        return {"status": "EmptyFile"}
     elif file_size_mb > 8:
-        return {"error": f"Файл {file.filename} слишком большой(более 8МБ)"}
+        return {"status": "TooMuch", "filename": file.filename}
     else:
         user_file = UserFile(file)
         save_file(user_file.__dict__)
-        return {"message": f"Файл {file.filename} успешно загружен"}
+        return {"status": "Success", "filename": file.filename}
 
 
 @router.get("/files/{file_id}")
