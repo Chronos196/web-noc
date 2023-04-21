@@ -7,12 +7,11 @@
         <header>
             <nav class="site-navigation">
                 <div class="site-title">
-                    <h1>НОЦ</h1>
-                    <h3>Аналитика</h3>
+                    <h1>НОЦ<br><span class="analitica">Аналитика</span></h1>
                 </div>
                 <ul class="nav-items">
                     <li class="nav-item">
-                        <a href="#" class="nav-item-link" id="nav-item-1">
+                        <a href="./statistic.html" class="nav-item-link" id="nav-item-1">
                             <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
                             <span>Статистика</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -50,7 +49,7 @@
             </nav>
         </header>
         <main>
-            <section class="top-content">
+            <div class="top-content">
                 <div class="top-menu">
                     <div class="search">
                         <input type="text" placeholder="Поиск">
@@ -62,8 +61,9 @@
                         <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
                     </div>
                 </div>
-            </section>
-            <section class="left-content">
+            </div>
+            <div class="project_main">
+            <div class="left-content">
                 <a href="#" id="back_link">&#706; Проекты</a>
                 <div class="project_info">
                 <div class="project_name">
@@ -139,13 +139,13 @@
                     <p>Основными потребителями являются мусоросортировочные комплексы и предприятия по переработке вторичного сырья со всей страны.</p>
                 </div>
                 </div>
-            </section>
-            <section class="right-content">
+            </div>
+            <div class="right-content">
                 <h2>Сводные данные</h2>
-                <div class="uniqueness_col">
+                <div class="sum_data_block">
                     <img src="../static/img/question_mark.svg" class="question-mark"  title="Подробная информация" width="21px" height="21px">
-                    <h3 class="uniqueness_col_title">Полезность</h3>
-                    <table сlass="uniqueness_col_table">
+                    <h3 class="sum_data_block_title">Полезность</h3>
+                    <table сlass="sum_data_block_table">
                         <tr>
                             <td class="project_crit no_standart_td">Статистика по Scopus</td>
                             <td class="no_standart_td">
@@ -159,10 +159,10 @@
                         </tr>
                     </table>
                 </div>
-                <div class="uniqueness_col">
+                <div class="sum_data_block">
                     <img src="../static/img/question_mark.svg" class="question-mark" title="Подробная информация" width="21px" height="21px">
-                    <h3 class="uniqueness_col_title">Уникальность</h3>
-                    <table сlass="uniqueness_col_table">
+                    <h3 class="sum_data_block_title">Уникальность</h3>
+                    <table сlass="sum_data_block_table">
                         <tr>
                             <td class="project_crit no_standart_td">Пересечение тем</td>
                             <td class="value_project_crit no_standart_td">2 совпадения</td>
@@ -173,10 +173,10 @@
                         </tr>
                     </table>
                 </div>
-                <div class="uniqueness_col">
+                <div class="sum_data_block">
                     <img src="../static/img/question_mark.svg" class="question-mark" title="Подробная информация" width="21px" height="21px">
-                    <h3 class="uniqueness_col_title">Реализуемость</h3>
-                    <table сlass="uniqueness_col_table">
+                    <h3 class="sum_data_block_title">Реализуемость</h3>
+                    <table сlass="sum_data_block_table">
                         <tr>
                             <td class="project_crit no_standart_td">Сроки реализации</td>
                             <td class="value_project_crit_data no_standart_td">2019 - 2020 год</td>
@@ -196,7 +196,8 @@
                         </tr>
                     </table>
                 </div>
-            </section>
+            </div>
+            </div>
         </main>
 
 
@@ -216,5 +217,6 @@
             </form>
         </div>
         <script src="../static/src/script.js"></script>
+        <script src="../static/src/projects.js"></script>
     </body>
 </html>
