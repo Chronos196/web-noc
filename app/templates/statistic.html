@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>НОЦ Аналитика</title>
+        <link rel="stylesheet" href="../static/css/style-statistic.css">
+    </head>
+    <body>
+        <header>
+            <nav class="site-navigation">
+                <div class="site-title">
+                    <h1>НОЦ<br><span class="analitica">Аналитика</span></h1>
+                </div>
+                <ul class="nav-items">
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link active" id="nav-item-1">
+                            <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
+                            <span>Статистика</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link" id="nav-item-2">
+                            <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>НОЦ</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link" id="nav-item-3">
+                            <img src="../static/img/chart.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>Направления</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./" class="nav-item-link" id="nav-item-4">
+                            <img src="../static/img/calendar.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>Проекты</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link" id="nav-item-5">
+                            <img src="../static/img/chat.svg" class="nav-item-icon"   width="18px" height="18px">
+                            <span>Входящие заявки</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="top-content">
+                <div class="top-menu">
+                    <div class="search">
+                        <input type="text" placeholder="Поиск">
+                        <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
+                    </div>
+                    <button id="add_request">Добавить заявку</button>
+                    <div class="profile">
+                        <span>Фамилия <br> Имя</span>
+                        <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                    </div>
+                </div>
+            </div>
+            <div class="statistic-main">
+                <div class="project_processing">
+                    <canvas id="project_processing_chart" width="350" height="450"></canvas>
+                </div>
+                <div class="budget">
+                    <canvas id="budget_chart" width="650" height="450"></canvas>
+                </div>
+                <div class="intersections_projects">
+                    <div>
+                        <canvas id="intersections_chart" width="400" height="450"></canvas>
+                    </div>
+                    <div id="container">
+                        <canvas id="process_work_сhart"  width="600" height="450"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <div id="blackout"></div>
+        <div id="form">
+            <form action="/upload_file" method="post" enctype="multipart/form-data">
+                <p>Перенесите документ</p>
+                <label for="file-upload" class="custom-file-upload">
+                    <img src="../static/img/download.svg" alt="Upload Image" width="106px" height="106px">
+                    <p class="form-text">Загрузите документ в формате<br> <b>.pdf</b> или <b>.doc</b></p>
+                  </label>
+                  <input type="file" id="file-upload" name="file" accept=".pdf,.doc,.docx">
+                <div class="form_buttons">
+                    <button class="fill_form_butn" type="button">ЗАПОЛНИТЬ ФОРМУ</button>
+                    <input class="send_doc_butn" type="submit" value="ОТПРАВИТЬ ДОКУМЕНТ">
+                </div>
+            </form>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
+        <script src="../static/src/script.js"></script>
+        <script src="../static/src/statistic.js"></script>
+    </body>
+</html>

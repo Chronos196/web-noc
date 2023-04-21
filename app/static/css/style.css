@@ -8,6 +8,13 @@ body{
     background-color: #FBF7F4;
 }
 
+a{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: inherit;
+}
+
 header{
     flex: 1;
     width: 265px;
@@ -21,31 +28,23 @@ header{
     padding: 20px;
 }
 
-h1, h3{
+.site-title h1{
     margin: 0;
     padding: 0;
-}
-
-.site-title h1{
     font-size: 36px;
 }
 
-.site-title h3{
-    font-size: 20px;
-}
-
-a{
+.site-title .analitica{
     margin: 0;
     padding: 0;
-    text-decoration: none;
-    color: inherit;
+    font-size: 20px;
 }
 
 .nav-items{
     margin: 0;
     padding: 0;
     margin-top: 40px;
-    margin-right: 10px;
+    margin-right: 20px;
     list-style: none;
 }
 
@@ -94,18 +93,22 @@ a{
     font-weight: bold;
 }
 
+
 main{
     flex: 6;
     width: 100%;
     display: grid;
-    grid-template-columns: 2fr 0.5fr;
-    grid-template-rows: repeat(2, auto);
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 100px 1fr;
 }
 
+.project_main{
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 280px;
+    overflow: hidden;
+}
 
 .top-content{
-    grid-column: 1 / -1;
     overflow: hidden;
     background-color: #FFFFFF;
     border: 1px solid #CCC1BE;
@@ -156,7 +159,7 @@ main{
 .top-menu button{
     width: 212px;
     height: 56px;
-    margin-left: 20%;
+    margin-left: auto;
     border-style: none;
     border-radius: 10px;
     background-color: #456086;
@@ -186,9 +189,6 @@ main{
     overflow-y: scroll; 
     padding: 30px;
     border-left: 1px solid #CCC1BE;
-
-    /* Строчка ниже "обединяет" элемента left-content и right-content */
-    /* grid-column: 1 / span 2; */
 }
 
 .project_info{
@@ -301,14 +301,19 @@ main{
     margin-left: 15px;
 }
 
-.uniqueness_col{
+.right-content h3{
+    margin: 0;
+}
+
+.sum_data_block{
     position: relative;
     margin: 20px;
     margin-top: 10px;
     padding: 0;
     padding-top: 15px;
+    padding-bottom: 10px;
     padding-left: 20px;
-    padding-right: 10px;
+    padding-right: 20px;
     background-color: #FFFFFF;
     border-radius: 10px;
     border-style: solid;
@@ -320,7 +325,6 @@ main{
 table{
     padding: 0;
     margin: 0;
-    
 }
 
 tr, .no_standart_td{
@@ -338,7 +342,7 @@ tr, .no_standart_td{
     cursor: pointer;
 }
 
-.uniqueness_col_title{
+.sum_data_block_title{
     color: #456086;
     font-weight: bold;
     padding-bottom: 10px;
@@ -361,7 +365,7 @@ tr, .no_standart_td{
     color: #F8BD8D;
 }
 
-.progress-bar {
+.progress-bar{
     width: 100%;
     height: 20px;
     margin-bottom: 10px;
@@ -547,6 +551,10 @@ ol li::before{
     font-size: 12px;
 }
 
+.project_name h1{
+    font-size: 30px;
+}
+
 .implem_period_info{
     color:#844685;
     font-weight: bold;
@@ -586,7 +594,7 @@ ol li::before{
     .right-content{
         display: none;
     }
-    main{
+    .project_main{
         grid-template-columns: 1fr;
     }
 }
