@@ -15,6 +15,10 @@ templates = Jinja2Templates(directory="app/templates")
 async def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+@router.get("/statistic", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("statistic.html", {"request": request})
+
 
 '''
 Максимальный размер BSON в монго составляет 16 Мбайт. Это можно исправить, но займусь этим потом
@@ -41,7 +45,3 @@ async def upload_file(file: UploadFile = File(...)):
 async def read_file(file_id):
     data = get_file(file_id) 
     return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, пока не знаю как это решить
-
-@router.get("/statistic.html", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("statistic.html", {"request": request})
