@@ -14,4 +14,3 @@ class UserFile():
         self.type = file.content_type
         self.content = Binary(file.file.read())
         ###self.user_id = ObjectId()
-
