@@ -1,11 +1,7 @@
-from fastapi import FastAPI
-from app.api.endpoints import router
+from app.api.endpoints import app
 from fastapi.staticfiles import StaticFiles
 
 from uvicorn import Server, Config
-
-app = FastAPI()
-app.include_router(router)
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
