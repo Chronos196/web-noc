@@ -49,19 +49,19 @@ async def root(request: Request):
 async def root(request: Request):
     return templates.TemplateResponse("statistic.html", {"request": request})
 
-@router.get("/profile", response_class=HTMLResponse)
+@app.get("/profile", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("profile.html", {"request": request})
 
-@router.get("/noc", response_class=HTMLResponse)
+@app.get("/noc", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("noc.html", {"request": request})
 
-@router.get("/incom_app", response_class=HTMLResponse)
+@app.get("/incom_app", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("incom_app.html", {"request": request})
 
-@router.get("/projects", response_class=HTMLResponse)
+@app.get("/projects", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("projects.html", {"request": request})
 '''
