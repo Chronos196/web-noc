@@ -17,7 +17,7 @@ a{
 
 header{
     flex: 1;
-    width: 265px;
+    min-width: 300px;
     height: 100vh;
     overflow: hidden;
     border-right: 1px solid #CCC1BE;
@@ -44,7 +44,7 @@ header{
     margin: 0;
     padding: 0;
     margin-top: 40px;
-    margin-right: 20px;
+    margin-right: 40px;
     list-style: none;
 }
 
@@ -57,7 +57,7 @@ header{
 .nav-item a {
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding-left: 30px;
     color: #A7A7A7;
 }
 
@@ -101,19 +101,12 @@ main{
     grid-template-rows: 100px 1fr;
 }
 
-.project_main{
-    width: 100%;
-    overflow-y: scroll;
-}
-
-.project_main::-webkit-scrollbar{
-    display: none;
-}
 
 .top-content{
     overflow: hidden;
     background-color: #FFFFFF;
     border: 1px solid #CCC1BE;
+    border-left: none;
 }
 
 .top-menu{
@@ -187,8 +180,46 @@ main{
     margin-left: 5px;
 }
 
+.statistic-main{
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-y: scroll;
+}
 
+.statistic-main::-webkit-scrollbar{
+    display: none;
+}
 
+.statistic-main>div{
+    background-color: #FFFFFF;
+    border-style: solid;
+    border-color: #DFDBD8;
+    border-width: thin;
+    border-radius: 10px;
+    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.1);
+}
+
+.project_processing{
+    display: inline-block;
+    text-align: center;
+    margin-right: 30px;
+    width: auto;
+    height: auto;
+}
+
+#project_processing_chart{
+    margin: 0;
+}
+
+.intersections_projects{
+    margin-top: 76px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: auto;
+    height: auto;
+}
 #blackout{
     background-color: rgba(1, 1, 1, 0.3);
     position: fixed;
@@ -268,6 +299,7 @@ main{
     cursor: pointer;
 }
 
+
 table{
     padding: 0;
     margin: 0;
@@ -282,121 +314,12 @@ tr, .no_standart_td{
 
 
 
+
 @media screen and (max-width: 800px) {
-    .right-content{
-        display: none;
-    }
+
 }
 @media screen and (max-width: 1000px) {
     header{
         display: none;
     }
-}
-
-
-.lk{
-    display: flex;
-    justify-content: center;
-    gap: 17px;
-    flex-wrap: wrap;
-    margin-top: 68px;
-}
-
-.lk-1{
-    background: #FFFFFF;
-    border: 1.06268px solid #DFDBD8;
-    border-radius: 12.7522px;
-    width: 498px;
-    height: 252px;
-}
-.lk-2{
-    background: #FFFFFF;
-    border: 1.06268px solid #DFDBD8;
-    border-radius: 12.7522px;
-    width: 627px;
-    height: 252px;
-}
-.lk-profile{
-    margin-top: 5px;
-    margin-bottom: 6px;
-    align-self: center;
-    text-align: center;
-    color: #456086;
-}
-.lk-profile-icon{
-    margin-left: 5px;
-}
-.personal-date{
-    margin-top: 5px;
-    margin-bottom: 6px;
-    align-self: center;
-    text-align: center;
-    color: #456086;
-}
-.avatar{
-    display: flex;
-    border: 1.06268px solid #DFDBD8;
-    border-radius: 12.7522px;
-    width: 461px;
-    height: 77px;
-    margin-left: 17px;
-    margin-right: 20px;
-    align-items: center;
-}
-.avatar-icon{
-    display: inline;
-    margin-left: 6px;
-    width: 61px;
-    height:61px;
-}
-.avatar button{
-    width: 124px;
-    height: 24px;
-    border: 1.06268px solid #456086;
-    border-radius: 12.7522px;
-    margin-left: 12px;
-    background: #FFFFFF;
-    color: #456086;
-}
-.initials{
-    display: flex;
-    flex-direction: column;
-    margin-top: 25px;
-}
-.name,
-.surname{
-    border: 1.06268px solid #DFDBD8;
-    border-radius: 12.7522px;
-    width: 176px;
-    height: 24px;
-    color: #A7A7A7;
-    margin-left: 23px;
-}
-.surname{
-    margin-top: 21px;
-}
-.data{
-    display: block;
-    margin-left:16px;
-}
-
-.data-text{
-    width: 161px;
-    height: 24px;
-    border: 1.06268px solid #DFDBD8;
-    border-radius: 12.7522px;
-    margin-left: 10px;
-    color: #A7A7A7;
-}
-.all-data{
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-}
-.icon-img{
-    background: #FFFFFF;
-    width: 40px;
-    height:40px;
-    display:inline;
-    margin-left: 16px;
 }

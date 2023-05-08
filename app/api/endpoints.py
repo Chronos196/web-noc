@@ -22,6 +22,18 @@ async def root(request: Request):
 @router.get("/profile", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("profile.html", {"request": request})
+
+@router.get("/noc", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("noc.html", {"request": request})
+
+@router.get("/incom_app", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("incom_app.html", {"request": request})
+
+@router.get("/projects", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("projects.html", {"request": request})
 '''
 Максимальный размер BSON в монго составляет 16 Мбайт. Это можно исправить, но займусь этим потом
 Пока сделаю ограничение размера файла в 8 Мбайт, т.к. кроме самого файла, BSON хранит

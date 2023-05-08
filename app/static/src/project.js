@@ -55,8 +55,6 @@ labels.forEach(function(label, index) {
     xAxisValue.style.left = (index * (barWidth + marginRight))+ '%';
     xAxisValue.textContent = label;
 
-    console.log(barWidth);
-
     xAxis.appendChild(xAxisValue);
 });
 // конец графа
