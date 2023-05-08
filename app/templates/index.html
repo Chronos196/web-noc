@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>НОЦ Аналитика</title>
-        <link rel="stylesheet" href="../static/css/style.css">
+        <link rel="stylesheet" href="../static/css/project-style.css">
     </head>
     <body>
         <header>
@@ -18,7 +18,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-item-link" id="nav-item-2">
+                        <a href="./noc" class="nav-item-link" id="nav-item-2">
                             <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>НОЦ</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -32,14 +32,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-item-link active" id="nav-item-4">
+                        <a href="./projects" class="nav-item-link active" id="nav-item-4">
                             <img src="../static/img/calendar.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>Проекты</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-item-link" id="nav-item-5">
+                        <a href="./incom_app" class="nav-item-link" id="nav-item-5">
                             <img src="../static/img/chat.svg" class="nav-item-icon"   width="18px" height="18px">
                             <span>Входящие заявки</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -56,15 +56,15 @@
                         <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
                     </div>
                     <button id="add_request">Добавить заявку</button>
-                    <div class="profile">
+                    <a href="./profile" class="profile">
                         <span>Фамилия <br> Имя</span>
                         <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="project_main">
             <div class="left-content">
-                <a href="#" id="back_link">&#706; Проекты</a>
+                <a href="./projects" id="back_link">&#706; Проекты</a>
                 <div class="project_info">
                 <div class="project_name">
                     <p>Направление: <b>Новые технологии</b></p>
@@ -203,7 +203,7 @@
 
         <div id="blackout"></div>
         <div id="form">
-            <form action="/upload_file" method="post" enctype="multipart/form-data">
+            <form action="/upload_file" method="post" enctype="multipart/form-data" class="upload_file_noc">
                 <p>Перенесите документ</p>
                 <label for="file-upload" class="custom-file-upload">
                     <img src="../static/img/download.svg" alt="Upload Image" width="106px" height="106px">
@@ -217,6 +217,6 @@
             </form>
         </div>
         <script src="../static/src/script.js"></script>
-        <script src="../static/src/projects.js"></script>
+        <script src="../static/src/project.js"></script>
     </body>
 </html>

@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <title>НОЦ Аналитика</title>
+        <link rel="stylesheet" href="../static/css/projects-style.css">
+    </head>
+    <body>
+        <header>
+            <nav class="site-navigation">
+                <div class="site-title">
+                    <h1>НОЦ<br><span class="analitica">Аналитика</span></h1>
+                </div>
+                <ul class="nav-items">
+                    <li class="nav-item">
+                        <a href="./statistic" class="nav-item-link" id="nav-item-1">
+                            <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
+                            <span>Статистика</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./noc" class="nav-item-link" id="nav-item-2">
+                            <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>НОЦ</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link" id="nav-item-3">
+                            <img src="../static/img/chart.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>Направления</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./projects" class="nav-item-link active" id="nav-item-4">
+                            <img src="../static/img/calendar.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>Проекты</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./incom_app" class="nav-item-link" id="nav-item-5">
+                            <img src="../static/img/chat.svg" class="nav-item-icon"   width="18px" height="18px">
+                            <span>Входящие заявки</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="top-content">
+                <div class="top-menu">
+                    <div class="search">
+                        <input type="text" placeholder="Поиск">
+                        <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
+                    </div>
+                    <button id="add_request">Добавить заявку</button>
+                    <a href="./profile" class="profile">
+                        <span>Фамилия <br> Имя</span>
+                        <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                    </a>
+                </div>
+            </div>
+            <div class="project_list_main">
+                <div class="filter">
+                    <div class="filter-buttons">
+                        <button class="filter-button">Применить</button>
+                        <button class="filter-cancel-button">Отменить</button>
+                    </div>
+                    <div class="filter-block">
+                        <h3>Направления</h3>
+                        <div>
+                        <label class="filter-item">
+                            <input type="checkbox" name="1_1">
+                            <span>a</span>
+                        </label>
+                        <label class="filter-item">
+                            <input type="checkbox" name="1_2">
+                            <span>b</span>
+                        </label>
+                        <label class="filter-item">
+                            <input type="checkbox" name="1_3">
+                            <span>c</span>
+                        </label>
+                        <label class="filter-item">
+                            <input type="checkbox" name="1_4">
+                            <span>d</span>
+                        </label>
+                        <label class="filter-item">
+                            <input type="checkbox" name="1_5">
+                            <span>Новые технологии</span>
+                        </label>
+                        </div>
+                    </div>
+                    <div class="filter-block">
+                        <h3>Рынок</h3>
+                        <div>
+                        <label class="filter-item">
+                            <input type="checkbox" name="2_1">
+                            <span>Муниципальный</span>
+                        </label>
+                        <label class="filter-item">
+                            <input type="checkbox" name="2_2">
+                            <span>Областной</span>
+                        </label>
+                        <label class="filter-item">
+                            <input type="checkbox" name="2_3">
+                            <span>Федеральный</span>
+                        </label>
+                        <label class="filter-item">
+                            <input type="checkbox" name="2_4">
+                            <span>Государственный</span>
+                        </label>
+                        <label class="filter-item">
+                            <input type="checkbox" name="2_5">
+                            <span>Мировой</span>
+                        </label>
+                        </div>
+                    </div>
+                </div>
+                <ol class="project_list">
+                    <li class="project_list_item" name="1_5 2_3">
+                        <a class="project_list_item_link" href="#">
+                            <p>Направление: <b>Новые технологии</b></p>
+                            <h1>1_5 2_3</h1>
+                        </a>
+                    </li>
+                    <li class="project_list_item" name="1_4 2_1">
+                        <a class="project_list_item_link" href="#">
+                            <p>Направление: <b>Новые технологии</b></p>
+                            <h1>1_4 2_1</h1>
+                        </a>
+                    </li>
+                    <li class="project_list_item" name="1_4 2_2">
+                        <a class="project_list_item_link" href="#">
+                            <p>Направление: <b>Новые технологии</b></p>
+                            <h1>1_4 2_2</h1>
+                        </a>
+                    </li>
+                    <li class="project_list_item" name="1_3 2_4">
+                        <a class="project_list_item_link" href="#">
+                            <p>Направление: <b>Новые технологии</b></p>
+                            <h1>1_3 2_4</h1>
+                        </a>
+                    </li>
+                    <li class="project_list_item" name="1_2 2_3">
+                        <a class="project_list_item_link" href="#">
+                            <p>Направление: <b>Новые технологии</b></p>
+                            <h1>1_2 2_3</h1>
+                        </a>
+                    </li>
+                    <li class="project_list_item" name="1_1 2_5">
+                        <a class="project_list_item_link" href="./">
+                            <p>Направление: <b>Новые технологии</b></p>
+                            <h1>Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов</h1>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </main>
+
+
+        <div id="blackout"></div>
+        <div id="form">
+            <form action="/upload_file" method="post" enctype="multipart/form-data" class="upload_file_noc">
+                <p>Перенесите документ</p>
+                <label for="file-upload" class="custom-file-upload">
+                    <img src="../static/img/download.svg" alt="Upload Image" width="106px" height="106px">
+                    <p class="form-text">Загрузите документ в формате<br> <b>.pdf</b> или <b>.doc</b></p>
+                  </label>
+                  <input type="file" id="file-upload" name="file" accept=".pdf,.doc,.docx">
+                <div class="form_buttons">
+                    <button class="fill_form_butn" type="button">ЗАПОЛНИТЬ ФОРМУ</button>
+                    <input class="send_doc_butn" type="submit" value="ОТПРАВИТЬ ДОКУМЕНТ">
+                </div>
+            </form>
+        </div>
+        <script src="../static/src/script.js"></script>
+        <script src="../static/src/projects-filter.js"></script>
+    </body>
+</html>

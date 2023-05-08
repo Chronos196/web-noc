@@ -17,7 +17,7 @@ a{
 
 header{
     flex: 1;
-    width: 265px;
+    min-width: 300px;
     height: 100vh;
     overflow: hidden;
     border-right: 1px solid #CCC1BE;
@@ -44,7 +44,7 @@ header{
     margin: 0;
     padding: 0;
     margin-top: 40px;
-    margin-right: 20px;
+    margin-right: 40px;
     list-style: none;
 }
 
@@ -57,7 +57,7 @@ header{
 .nav-item a {
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding-left: 30px;
     color: #A7A7A7;
 }
 
@@ -106,6 +106,7 @@ main{
     overflow: hidden;
     background-color: #FFFFFF;
     border: 1px solid #CCC1BE;
+    border-left: none;
 }
 
 .top-menu{

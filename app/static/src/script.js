@@ -7,7 +7,7 @@ const fileUpload = document.querySelector('#file-upload');
 const fileUploadLabel = document.querySelector('.custom-file-upload');
 const fileUploadLabelText = document.querySelector('.custom-file-upload p');
 
-var form = document.querySelector('form');
+var form = document.querySelector('.upload_file_noc');
 
 fileUpload.addEventListener('change', () => {
     if (fileUpload.files.length > 0) {

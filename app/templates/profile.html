@@ -1,7 +1,8 @@
 <html>
     <head>
         <title>НОЦ Аналитика</title>
-        <link rel="stylesheet" href="../static/css/statistic-style.css">
+        <link rel="stylesheet" href="../static/css/profile-style.css">
+        <meta charset="utf-8">
     </head>
     <body>
         <header>
@@ -11,7 +12,7 @@
                 </div>
                 <ul class="nav-items">
                     <li class="nav-item">
-                        <a href="#" class="nav-item-link active" id="nav-item-1">
+                        <a href="./statistic" class="nav-item-link" id="nav-item-1">
                             <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
                             <span>Статистика</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -62,21 +63,43 @@
                     </a>
                 </div>
             </div>
-            <div class="statistic-main">
-                <div class="project_processing">
-                    <canvas id="project_processing_chart" width="350" height="450"></canvas>
-                </div>
-                <div class="budget">
-                    <canvas id="budget_chart" width="650" height="450"></canvas>
-                </div>
-                <div class="intersections_projects">
-                    <div>
-                        <canvas id="intersections_chart" width="400" height="450"></canvas>
+            <div class="project_main">
+                <form action="" method="post" enctype="multipart/form-data" class="upload-lk-info">
+                <div class = "lk">
+                    <div class="lk-1">
+                        <h3 class="lk-profile">Профиль</h3>
+                        <div class="avatar">
+                            <img  src="../static/img/avatar.svg" class="lk-profile-icon" alt = "аватарка" width="61px" height="61px" class="avatar-icon">
+                            <label for="d-photo" class="upload-avatar-image"><span>Загрузить фото</span></label>
+                            <input type="file" id="d-photo" name="file" accept=".jpeg,.png,.pic">
+                        </div>
+                        <div class="initials">
+                            <input type = "text" value="Иван" class="name">
+                            <input type = "text" value="Иванов" class="surname">
+                        </div>
                     </div>
-                    <div id="container">
-                        <canvas id="process_work_сhart"  width="600" height="450"></canvas>
+                    <div class="lk-2">
+                        <h3 class="personal-date">Личные Данные</h3>
+                        <div class="data">
+                            <div class = "all-data">
+                                <img src = "../static/img/phone.svg" widthg="19.93px" heihgt="19.87px" class="icon-img">
+                                <input type = "tel" value="+79127320122" class="data-text">
+                            </div>
+                            <div class = "all-data">
+                                <img src = "../static/img/mail.svg" widthg="20px" heihgt="16px" class="icon-img">
+                                <input type = "email" value="barsik@mail.ru" class="data-text">
+                            </div>
+                            <div class = "all-data">
+                                 <img src = "../static/img/mail.svg" width="24px" heihgt="23px" class="icon-img">
+                                 <input type = "text"  value="Смена пароля" class="data-text">
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class = "button-save">
+                    <button id="save-date" type="submit">Сохранить данные</button>
+                </div>
+                </form>
             </div>
         </main>
 
@@ -96,8 +119,7 @@
                 </div>
             </form>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
         <script src="../static/src/script.js"></script>
-        <script src="../static/src/statistic.js"></script>
+        <script src="../static/src/profile.js"></script>
     </body>
 </html>

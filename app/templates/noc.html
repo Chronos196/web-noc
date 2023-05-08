@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>НОЦ Аналитика</title>
-        <link rel="stylesheet" href="../static/css/statistic-style.css">
+        <link rel="stylesheet" href="../static/css/noc-style.css">
     </head>
     <body>
         <header>
@@ -11,14 +11,14 @@
                 </div>
                 <ul class="nav-items">
                     <li class="nav-item">
-                        <a href="#" class="nav-item-link active" id="nav-item-1">
+                        <a href="./statistic" class="nav-item-link" id="nav-item-1">
                             <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
                             <span>Статистика</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="./noc" class="nav-item-link" id="nav-item-2">
+                        <a href="#" class="nav-item-link active" id="nav-item-2">
                             <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>НОЦ</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -62,20 +62,17 @@
                     </a>
                 </div>
             </div>
-            <div class="statistic-main">
-                <div class="project_processing">
-                    <canvas id="project_processing_chart" width="350" height="450"></canvas>
-                </div>
-                <div class="budget">
-                    <canvas id="budget_chart" width="650" height="450"></canvas>
-                </div>
-                <div class="intersections_projects">
-                    <div>
-                        <canvas id="intersections_chart" width="400" height="450"></canvas>
-                    </div>
-                    <div id="container">
-                        <canvas id="process_work_сhart"  width="600" height="450"></canvas>
-                    </div>
+            <div class="noc_main">
+                <div class="noc_main_info">
+                    <h1>О центре</h1>
+                    <p>Уральский межрегиональный научно-образовательный центр мирового уровня «Передовые производственные технологии и 
+                        материалы» создан для объединения потенциалов образовательных и научных организаций реального сектора Свердловской, 
+                        Челябинской и Курганской областей. Центр участвует в получении конкурентоспособных технологий и продуктов, и их 
+                        последующей коммерциализации, а также подготовке кадров для решения научно-технологических задач с целью прорывного 
+                        развития по приоритетным направлениям и повышения конкурентоспособности экономик субъектов в периметре центра.</p>
+                    <p>Уральский федеральный университет выступил инициатором создания и выполняет функции проектного офиса УМНОЦ.</p>
+                    <p>Идею создания научно-образовательного центра поддержал Президент России Владимир Путин в ходе визита в УрФУ в июле 
+                        2019 года.</p>
                 </div>
             </div>
         </main>
@@ -96,8 +93,6 @@
                 </div>
             </form>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
         <script src="../static/src/script.js"></script>
-        <script src="../static/src/statistic.js"></script>
     </body>
 </html>
