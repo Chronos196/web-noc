@@ -2,7 +2,7 @@ from fastapi import File, UploadFile, Request, Depends, FastAPI, status, Respons
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
-from app.db.db import save_file, get_file_content, accept_application, reject_application, get_files_content
+from app.db.db import save_file, get_file_content, accept_application, reject_application, get_files_content, get_user_files
 from app.db.models import UserFile
 
 from bson import json_util
@@ -121,6 +121,10 @@ async def get_applications(user: User = Depends(current_active_superuser)):
     data = await get_files_content(True)
     return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, алекс пока не знает как это решить
 
+@app.get("/user-applications")
+async def get_user_applications(user: User = Depends(current_active_default_user)):
+    data = await get_user_files(user.id, True)
+    return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, алекс пока не знает как это решить
 
 @app.on_event("startup")
 async def on_startup():
