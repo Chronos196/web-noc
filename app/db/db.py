@@ -29,19 +29,19 @@ async def reject_application(file_id):
 
 async def get_file_content(file_id, isApplications = False):
     collection = get_collection(isApplications)
-    return await collection.find_one({'_id': ObjectId(file_id)}, {'content': 1, '_id': 0})
+    return await collection.find_one({'_id': ObjectId(file_id)}, {'content': 1, 'keywords': 1, '_id': 0})
 
 async def get_files_content(isApplications = False):
     result = []
     collection = get_collection(isApplications)
-    async for x in collection.find({}, {"_id": 1, "content": 1}):
+    async for x in collection.find({}, {"_id": 1, "preview": 1}):
         result.append(x)
     return result
 
 async def get_user_files(user_id, isApplications = False):
     result = []
     collection = get_collection(isApplications)
-    async for x in collection.find({'user_id' : ObjectId(user_id)}, {'content' : 1, '_id' : 1}):
+    async for x in collection.find({'user_id' : ObjectId(user_id)}, {'preview': 1, '_id' : 1}):
         result.append(x)
     return result
 

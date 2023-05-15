@@ -8,6 +8,8 @@ from fastapi_users import models
 class UserRead(schemas.BaseUser[PydanticObjectId]):
     id: models.ID
     email: EmailStr
+    name: str
+    surname: str
     is_active: bool = True
     is_superuser: bool = False
     is_verified: bool = False
@@ -15,6 +17,8 @@ class UserRead(schemas.BaseUser[PydanticObjectId]):
 
 class UserCreate(schemas.BaseUserCreate):
     email: EmailStr
+    name: str
+    surname: str
     password: str
     is_active: Optional[bool] = True
     is_superuser: Optional[bool] = False
@@ -24,6 +28,8 @@ class UserCreate(schemas.BaseUserCreate):
 class UserUpdate(schemas.BaseUserUpdate):
     password: Optional[str]
     email: Optional[EmailStr]
+    name: Optional[str]
+    surname: Optional[str]
     is_active: Optional[bool]
     is_superuser: Optional[bool]
     is_verified: Optional[bool]
