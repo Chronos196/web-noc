@@ -121,7 +121,7 @@ async def get_applications(user: User = Depends(current_active_superuser)):
     data = await get_files_content(True)
     return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, алекс пока не знает как это решить
 
-@app.get("/user-applications")
+@app.get("/user-applications/")
 async def get_user_applications(user: User = Depends(current_active_default_user)):
     data = await get_user_files(user.id, True)
     return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, алекс пока не знает как это решить
