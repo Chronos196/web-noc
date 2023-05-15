@@ -12,24 +12,15 @@ from typing import Callable
 moscow_tz = pytz.timezone('Europe/Moscow')
 
 class UserFile():
-    def __init__(self, file: UploadFile, user_id, get_keywords: Callable[[str], list[str]]):
+    def __init__(self, filename, user_id, content: dict[str, str], get_keywords: Callable[[str], list[str]]):
         self._id = ObjectId()
         self.user_id = user_id
-        self.title = file.filename
+        self.title = filename
         self.upload_date = datetime.now(moscow_tz)
-        self.type = file.content_type
-        self.content = file.file.read().decode('utf-8-sig')
-        self.keywords = get_keywords(self.content)
-        self.preview = self.__get_preview_content(self.content)
-
-    def __get_preview_content(self, text: str) -> list[str]:
-        result = []
-        preview_head = ("Проект", "Направление")
-        split_text = text.splitlines()
-        for i in range(0, len(split_text)):
-            if split_text[i].startswith(preview_head):
-                result.append(split_text[i])
-        return result
+        self.content = content
+        self.keywords = get_keywords(' '.join(content.values()))
+        self.preview = {'Направление': content['Направление'],
+                        'Проект' : content['Название проекта'],}
 
 
 class User(BeanieBaseUser, Document):
@@ -42,3 +33,9 @@ class User(BeanieBaseUser, Document):
     is_verified: bool = False
     projects: list[models.ID] = []
     applications: list[models.ID] = []
+
+
+class Direction():
+    def __init__(self, direction_name: str) -> None:
+        self._id = ObjectId()
+        self.name = direction_name
