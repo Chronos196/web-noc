@@ -2,7 +2,7 @@ from fastapi import File, UploadFile, Request, Depends, FastAPI, status, Respons
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
-from app.db.db import save_file, get_file_content, accept_application, reject_application, get_files_content, get_user_files
+from app.db.db import save_file, get_file_content, accept_application, reject_application, get_files_content, get_user_files, get_directions
 from app.db.models import UserFile
 
 from bson import json_util
@@ -13,13 +13,12 @@ from app.db.db import User, db
 from app.core.security.schemas import UserCreate, UserRead, UserUpdate
 from app.core.security.auth import auth_backend, fastapi_users, current_active_superuser, current_active_default_user, current_active_user
 
-from app.api.textrank import TextRank
-
-import re
+from app.api.textrank import TextRank, FileParser
 
 
 templates = Jinja2Templates(directory="app/templates")
 textRank = TextRank()
+fileParser = FileParser()
 app = FastAPI()
 
 app.include_router(
@@ -79,18 +78,19 @@ async def upload_file(response: Response, file: UploadFile = File(...), user: Us
     file_size_mb = file_size / (1024 * 1024)
     file.file.seek(0)
 
-    if re.search(r'\.[^\.]*$', file.filename).group() != '.txt':
+    if not file.filename.endswith(".docx"):
         return {"status":"InvalidExtension", "filename":file.filename}
     elif file.filename == '' or file_size / 1024 == 0:
         return {"status": "EmptyFile"}
     elif file_size_mb > 8:
         return {"status": "TooMuch", "filename": file.filename}
     else:
-        user_file = UserFile(file, user.id, textRank.get_keywords)
+        content = await fileParser.get_content(file)
+        user_file = UserFile(file.filename, user.id, content, textRank.get_keywords)
         await save_file(user_file.__dict__)
         response.status_code = status.HTTP_201_CREATED
         return {"status": "Success", "filename": file.filename}
-    
+
 @app.put("/accept_file/{file_id}", status_code=200)
 async def accept_file(file_id, user: User = Depends(current_active_superuser)):
     await accept_application(file_id)
@@ -124,6 +124,11 @@ async def get_applications(user: User = Depends(current_active_superuser)):
 @app.get("/user-applications/")
 async def get_user_applications(user: User = Depends(current_active_default_user)):
     data = await get_user_files(user.id, True)
+    return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, алекс пока не знает как это решить
+
+@app.get("/directions/")
+async def get_all_directions():
+    data = await get_directions()
     return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, алекс пока не знает как это решить
 
 @app.on_event("startup")

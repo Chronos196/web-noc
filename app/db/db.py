@@ -2,7 +2,7 @@ from app.core.config import DB_LINK, DB
 from bson.objectid import ObjectId
 import motor.motor_asyncio
 from fastapi_users.db import BeanieUserDatabase
-from .models import User
+from .models import User, Direction
 
 client = motor.motor_asyncio.AsyncIOMotorClient(
     DB_LINK, uuidRepresentation="standard"
@@ -11,10 +11,22 @@ db = client[DB]
 users = db['User']
 files = db['files']
 applications = db['applications']
+directions = db['directions']
 
 async def save_file(file):
     await applications.insert_one(file)
     await users.update_one({'_id' : file['user_id']}, {'$push' : {'applications' : file['_id']}})
+    direction_name = file['content']['Направление']
+    direction = await directions.find_one({'name': direction_name})
+    if not direction:
+        direction = Direction(direction_name)
+        await directions.insert_one(direction.__dict__)
+
+async def get_directions():
+    result = []
+    async for dir in directions.find({}, {'_id': 0, 'name' : 1}):
+        result.append(dir)
+    return result
 
 async def accept_application(file_id):
     file = await applications.find_one_and_delete({'_id' : ObjectId(file_id)})
