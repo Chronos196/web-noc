@@ -2,7 +2,7 @@ from fastapi import File, UploadFile, Request, Depends, FastAPI, status, Respons
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
-from app.db.db import save_file, get_file_content, accept_application, reject_application, get_files_content, get_user_files, get_directions
+from app.db.db import save_file, get_file_content, accept_application, reject_application, get_files_preview, get_user_files, get_directions, get_direction_id
 from app.db.models import UserFile
 
 from bson import json_util
@@ -18,7 +18,6 @@ from app.api.textrank import TextRank, FileParser
 
 templates = Jinja2Templates(directory="app/templates")
 textRank = TextRank()
-fileParser = FileParser()
 app = FastAPI()
 
 app.include_router(
@@ -85,8 +84,10 @@ async def upload_file(response: Response, file: UploadFile = File(...), user: Us
     elif file_size_mb > 8:
         return {"status": "TooMuch", "filename": file.filename}
     else:
-        content = await fileParser.get_content(file)
-        user_file = UserFile(file.filename, user.id, content, textRank.get_keywords)
+        file_parser = FileParser(textRank.get_keywords, file)
+        await file_parser.parse_file()
+        direction_id = await get_direction_id(file_parser.preview['Направление'])
+        user_file = UserFile(file.filename, user.id, direction_id, file_parser)
         await save_file(user_file.__dict__)
         response.status_code = status.HTTP_201_CREATED
         return {"status": "Success", "filename": file.filename}
@@ -108,7 +109,7 @@ async def read_file(file_id):
 
 @app.get("/files/")
 async def get_files():
-    data = await get_files_content()
+    data = await get_files_preview()
     return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, алекс пока не знает как это решить
 
 @app.get("/applications/{application_id}")
@@ -118,7 +119,7 @@ async def read_application(application_id, user: User = Depends(current_active_u
 
 @app.get("/applications/")
 async def get_applications(user: User = Depends(current_active_superuser)):
-    data = await get_files_content(True)
+    data = await get_files_preview(True)
     return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, алекс пока не знает как это решить
 
 @app.get("/user-applications/")
