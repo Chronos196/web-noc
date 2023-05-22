@@ -58,7 +58,7 @@
                     </div>
                     <button id="add_request">Добавить заявку</button>
                     <a href="./profile" class="profile">
-                        <span>Фамилия <br> Имя</span>
+                        <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
                         <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
                     </a>
                 </div>
@@ -74,8 +74,8 @@
                             <input type="file" id="d-photo" name="file" accept=".jpeg,.png,.pic">
                         </div>
                         <div class="initials">
-                            <input type = "text" value="Иван" class="name">
-                            <input type = "text" value="Иванов" class="surname">
+                            <input type = "text" value="{{ user.name.title()}}" class="name">
+                            <input type = "text" value="{{ user.surname.title()}}" class="surname">
                         </div>
                     </div>
                     <div class="lk-2">
@@ -83,11 +83,16 @@
                         <div class="data">
                             <div class = "all-data">
                                 <img src = "../static/img/phone.svg" widthg="19.93px" heihgt="19.87px" class="icon-img">
-                                <input type = "tel" value="+79127320122" class="data-text">
+                                <input type = "tel" value="
+                                {%- if user.phone_number -%}
+                                {{user.phone_number}}
+                                {%- else -%}
+                                Не задан
+                                {%- endif -%}" class="data-text">
                             </div>
                             <div class = "all-data">
                                 <img src = "../static/img/mail.svg" widthg="20px" heihgt="16px" class="icon-img">
-                                <input type = "email" value="barsik@mail.ru" class="data-text">
+                                <input type = "email" value="{{ user.email}}" class="data-text">
                             </div>
                             <div class = "all-data">
                                  <img src = "../static/img/mail.svg" width="24px" heihgt="23px" class="icon-img">
@@ -98,6 +103,7 @@
                 </div>
                 <div class = "button-save">
                     <button id="save-date" type="submit">Сохранить данные</button>
+                    <button id="logout_button" type="button">Выход</button>
                 </div>
                 </form>
             </div>

@@ -1,0 +1,216 @@
+<html>
+    <head>
+        <title>НОЦ Аналитика</title>
+        <link rel="stylesheet" href="../static/css/project-style.css">
+    </head>
+    <body>
+        <header>
+            <nav class="site-navigation">
+                <div class="site-title">
+                    <h1>НОЦ<br><span class="analitica">Аналитика</span></h1>
+                </div>
+                <ul class="nav-items">
+                    <li class="nav-item">
+                        <a href="/statistic" class="nav-item-link" id="nav-item-1">
+                            <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
+                            <span>Статистика</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/noc" class="nav-item-link" id="nav-item-2">
+                            <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>НОЦ</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-item-link" id="nav-item-3">
+                            <img src="../static/img/chart.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>Направления</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/projects" class="nav-item-link" id="nav-item-4">
+                            <img src="../static/img/calendar.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>Проекты</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/incom_app" class="nav-item-link active" id="nav-item-5">
+                            <img src="../static/img/chat.svg" class="nav-item-icon"   width="18px" height="18px">
+                            <span>Входящие заявки</span>
+                            <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="top-content">
+                <div class="top-menu">
+                    <div class="search">
+                        <input type="text" placeholder="Поиск">
+                        <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
+                    </div>
+                    <button id="add_request">Добавить заявку</button>
+                    <a href="/profile" class="{%- if user -%}profile{%- else-%}profile_not_auth{%- endif-%}">
+                        {%- if user -%}
+                        <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
+                        {%- else -%}
+                        <span> Личный <br> кабинет</span>
+                        {%- endif -%}
+                        <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                    </a>
+                </div>
+            </div>
+            <div class="project_main">
+            <div class="left-content">
+                <a href="/incom_app" id="back_link">&#706; Проекты</a>
+                <div class="project_info">
+                <div class="project_name">
+                    <p>Направление: <b>{{project['preview']['Направление']}}</b></p>
+                    <h1>{{project['preview']['Название проекта']}}</h1>
+                </div>
+                <div class="name_organisation left_cont_div">
+                    <h3>Наименование организации</h3>
+                    <p>{{project['content'].get('Наименование организации','не известно')}}</p>
+                </div>
+                <div class="project_cost left_cont_div">
+                    <h3>Стоимость проекта</h3>
+                    <p class="total_cost">{{project['content'].get('Стоимость проекта','не известно')}}</p>
+                    <table class="cost_table">
+                        <tr>
+                            <td class="cost">{{project['content'].get('Бюджет','не известно')}}</td>
+                            <td class="cost_name">бюджет</td>
+                        </tr>
+                        <tr>
+                            <td class="cost">{{project['content'].get('Внебюджет','не известно')}}</td>
+                            <td class="cost_name">Внебюджет</td>
+                        </tr>
+                        <tr>
+                            <td class="cost">{{project['content'].get('Местные источники','не известно')}}</td>
+                            <td class="cost_name">Местные источники</td>
+                        </tr>
+                    </table>
+                    <a href="#" download="" class="download_link">Скачать <b>.pdf</b></a>
+                </div>
+                <div class="project_market left_cont_div">
+                    <h3>Рынок проекта</h3>
+                    <p><b>{{project['content'].get('Рынок проекта','не известно')}}</b></p>
+                </div>
+                <div class="director left_cont_div">
+                    <h3>Исполнители</h3>
+                    <p>{{project['content'].get('Исполнители','не известно')}}</p>
+                </div>
+                <div class="implem_period left_cont_div">
+                    <h3>Срок реализации</h3>
+                    <p><b>Даты(продолжительность): <data>{{project['content'].get('Срок реализации','не известно')}}</data></b></p>
+                </div>
+                <div class="project_objective left_cont_div">
+                  <h3>Цель проекта</h3>
+                  <p>{{project['content'].get('Цель проекта','не известно')}}</p>
+                </div>
+                <div class="justifi_need left_cont_div">
+                    <h3>Обоснование необходимости проекта</h3>
+                    <p>{{project['content'].get('Обоснование необходимости проекта','не известно')}}</p>
+                </div>
+                <div class="project_result left_cont_div">
+                    <h3>Результат проекта</h3>
+                    <p>{{project['content'].get('Результат проекта','не известно')}}</p>
+                </div>
+                <div class="project_consumers left_cont_div">
+                    <h3>Потребители проекта</h3>
+                    <p>{{project['content'].get('Потребители проекта','не известно')}}</p>
+                </div>
+                </div>
+                {% if user.is_superuser-%}
+                <div class="project_decision">
+                    <button type="button" class="accept_app" onclick="acceptOrRejectApp(true, '{{app_id}}')">Принять</button>
+                    <button type="button" class="reject_app" onclick="acceptOrRejectApp(false, '{{app_id}}')">Отклонить</button>
+                </div>
+                {%endif%}
+            </div>
+            <div class="right-content">
+                <h2>Сводные данные</h2>
+                <div class="sum_data_block">
+                    <img src="../static/img/question_mark.svg" class="question-mark"  title="Подробная информация" width="21px" height="21px">
+                    <h3 class="sum_data_block_title">Полезность</h3>
+                    <table сlass="sum_data_block_table">
+                        <tr>
+                            <td class="project_crit no_standart_td">Статистика по Scopus</td>
+                            <td class="no_standart_td">
+                                <div class="chart">
+                                    <div class="x-axis"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="project_crit no_standart_td">Количество исследований по данной теме</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="sum_data_block">
+                    <img src="../static/img/question_mark.svg" class="question-mark" title="Подробная информация" width="21px" height="21px" onclick="showUniqueness()">
+                    <h3 class="sum_data_block_title">Уникальность</h3>
+                    <table сlass="sum_data_block_table">
+                        <tr>
+                            <td class="project_crit no_standart_td">Пересечение тем</td>
+                            <td class="value_project_crit no_standart_td">2 совпадения</td>
+                        </tr>
+                        <tr>
+                            <td class="project_crit no_standart_td">Проектов по направлению</td>
+                            <td class="value_project_crit no_standart_td">5 проектов</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="sum_data_block">
+                    <img src="../static/img/question_mark.svg" class="question-mark" title="Подробная информация" width="21px" height="21px">
+                    <h3 class="sum_data_block_title">Реализуемость</h3>
+                    <table сlass="sum_data_block_table">
+                        <tr>
+                            <td class="project_crit no_standart_td">Сроки реализации</td>
+                            <td class="value_project_crit_data no_standart_td">{{project['content'].get('Срок реализации','не известно')}}</td>
+                        </tr>
+                        <tr>
+                            <td class="project_crit no_standart_td">Стадия работы</td>
+                            <td class="progress_bar no_standart_td">
+                                <div class="progress-bar">
+                                    <div class="progress">
+                                      <span class="progress-text">54%</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="project_crit no_standart_td">Требуемый бюджет</td>
+                            <td class="value_project_crit no_standart_td">{{project['content'].get('Стоимость проекта','не известно')}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </main>
+
+
+        <div id="blackout"></div>
+        <div id="form">
+            <form action="/upload_file" method="post" enctype="multipart/form-data" class="upload_file_noc">
+                <p>Перенесите документ</p>
+                <label for="file-upload" class="custom-file-upload">
+                    <img src="../static/img/download.svg" alt="Upload Image" width="106px" height="106px">
+                    <p class="form-text">Загрузите документ в формате<br> <b>.pdf</b> или <b>.doc</b></p>
+                  </label>
+                  <input type="file" id="file-upload" name="file" accept=".pdf,.doc,.docx">
+                <div class="form_buttons">
+                    <button class="fill_form_butn" type="button">ЗАПОЛНИТЬ ФОРМУ</button>
+                    <input class="send_doc_butn" type="submit" value="ОТПРАВИТЬ ДОКУМЕНТ">
+                </div>
+            </form>
+        </div>
+        <script src="../static/src/script.js"></script>
+        <script src="../static/src/project.js"></script>
+        <script src="../static/src/aplication.js"></script>
+    </body>
+</html>

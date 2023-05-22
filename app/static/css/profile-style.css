@@ -402,6 +402,11 @@ tr, .no_standart_td{
     display:inline;
     margin-left: 16px;
 }
+
+.button-save{
+    display: flex;
+    justify-content: space-evenly;
+}
 .button-save button
 {
     width: 212px;
@@ -416,9 +421,6 @@ tr, .no_standart_td{
     text-transform: uppercase;
     cursor: pointer;
     justify-content: center;
-    position: relative;
-    left: 50%;
-    transform: translate(-50%, 0);
 }
 
 #d-photo{

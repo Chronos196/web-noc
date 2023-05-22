@@ -56,14 +56,36 @@
                         <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
                     </div>
                     <button id="add_request">Добавить заявку</button>
-                    <a href="./profile" class="profile">
-                        <span>Фамилия <br> Имя</span>
+                    <a href="./profile" class="{%- if user -%}profile{%- else-%}profile_not_auth{%- endif-%}">
+                        {%- if user -%}
+                        <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
+                        {%- else -%}
+                        <span> Личный <br> кабинет</span>
+                        {%- endif -%}
                         <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
                     </a>
                 </div>
             </div>
             <div class="project_list_main">
+                {% if user -%} 
+                {% if apps |length != 0 -%}
                 <ol class="project_list">
+                {% for app in apps -%}
+                <li class="project_list_item">
+                    <a class="project_list_item_link" href="/appplication?app_id={{app['_id']}}" data-category="a">
+                        <p>Направление: <b>{{app['preview']['Направление']}}</b></p>
+                        <h1>{{app['preview']['Название проекта']}}</h1>
+                    </a>
+                </li>
+                {% endfor -%}
+                </ol>
+                {% else -%}
+                <h2>У вас не входящих заявок</h2>
+                {% endif %}
+                {% else -%}
+                <h2>Что бы посмотреть входящие заявки нужно войти в аккаунт</h2>
+                {% endif %}
+                <!-- <ol class="project_list">
                     <li class="project_list_item">
                         <a class="project_list_item_link" href="#" data-category="a">
                             <p>Направление: <b>Новые технологии</b></p>
@@ -106,7 +128,7 @@
                             <h1>d</h1>
                         </a>
                     </li>
-                </ol>
+                </ol> -->
             </div>
         </main>
 

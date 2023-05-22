@@ -165,7 +165,7 @@ main{
     cursor: pointer;
 }
 
-.profile{
+.profile, .profile_not_auth{
     display: flex;
     align-items: center;
     padding: 0;
@@ -312,6 +312,128 @@ tr, .no_standart_td{
     margin: 0;
 }
 
+.registration{
+    width: 652px;
+    height: 455px;
+    background: #FFFFFF;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.auth_block{
+    z-index: 150;
+    width: 652px;
+    height: 455px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    background: #FFFFFF;
+}
+.registration_open{
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.reg{
+    background: #E7E5E3;
+    border: 1.06268px solid #DFDBD8;
+    border-radius: 12.7522px;
+    width: 159px;
+    height: 51px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.open{
+    background: #E7E5E3;
+    border: 1.06268px solid #DFDBD8;
+    border-radius: 12.7522px;
+    width: 159px;
+    height: 51px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    cursor: pointer;
+
+}
+
+.reg_active{
+    background: #A7A7A7 !important;
+}
+
+.initials{
+    color: #1A1A1A;
+    margin-left: 215px;
+    margin-top: 8px;
+}
+.initials1{
+    margin-top: 18px;
+    color: #1A1A1A;
+    margin-left: 215px;
+}
+
+.registration_text{
+    background: #E7E5E3;
+    border: 1.06268px solid #DFDBD8;
+    border-radius: 12.7522px;
+    width: 222px;
+    height: 22px;
+    padding-left: 11px;
+    color: #A7A7A7;
+    margin-left: 215px;
+    margin-top: -10px;
+    
+}
+.register_butn, .auth_butn{
+    width: 222px;
+    height: 32px;
+    margin-top: 29px;
+    margin-left: 215px;
+    border-style: none;
+    border-radius: 10px;
+    background-color: #456086;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    justify-content: center;
+    cursor: pointer;
+}
+.quest{
+    display: flex;
+    gap: 204x;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.press_here{
+    color: #456086;
+    width: 87px;
+    height: 18px;
+    font-size: 12px;
+    line-height: 18px;
+    border-style: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+
+}
+
+.question{
+    color: #A7A7A7;
+    width: 110px;
+    font-size: 12px;
+    line-height: 18px;
+}
 
 
 

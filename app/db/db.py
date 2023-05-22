@@ -53,7 +53,7 @@ async def reject_application(file_id):
 
 async def get_file_content(file_id, isApplications = False):
     collection = get_collection(isApplications)
-    return await collection.find_one({'_id': ObjectId(file_id)}, {'content': 1, 'keywords': 1, '_id': 0})
+    return await collection.find_one({'_id': ObjectId(file_id)}, {'content': 1, 'keywords': 1, '_id': 0, 'preview': 1})
 
 async def get_files_preview(isApplications = False):
     result = []

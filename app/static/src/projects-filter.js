@@ -9,7 +9,7 @@ document.querySelector('.filter-button').addEventListener('click', function(){
     });
     projects.forEach(project => {
         visible = true;
-        projectFilters = project.getAttribute('name').split(" ");
+        projectFilters = project.getAttribute('name').split("/");
         filtersCategory.forEach((filter, index) => {
             if (filter.length !== 0 && !filter.includes(projectFilters[index])){
                 visible *= false;

@@ -1,4 +1,4 @@
-from fastapi import File, UploadFile, Request, Depends, FastAPI, status, Response
+from fastapi import File, UploadFile, Request, Depends, FastAPI, status, Response, Query
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
@@ -15,6 +15,7 @@ from app.core.security.auth import auth_backend, fastapi_users, current_active_s
 
 from app.api.textrank import TextRank, FileParser
 
+from starlette.responses import Response
 
 templates = Jinja2Templates(directory="app/templates")
 textRank = TextRank()
@@ -41,30 +42,68 @@ app.include_router(
     tags=["users"],
 )
 
+@app.middleware("http")
+async def modify_response(request, call_next):
+    response = await call_next(request)
+    if response.status_code == 401:
+        match request.url.path:
+            case '/':
+                response = templates.TemplateResponse("index.html", {"request": request}, status_code=401)
+            case '/statistic':
+                response = templates.TemplateResponse("statistic.html",{"request": request}, status_code=401)
+            case '/noc':
+                response = templates.TemplateResponse("noc.html",{"request": request}, status_code=401)
+            case '/incom_app':
+                response = templates.TemplateResponse("incom_app.html",{"request": request}, status_code=401)
+            case '/projects':
+                all_projects = await get_files()
+                directions = await get_all_directions()
+                response = templates.TemplateResponse("projects.html",{"request": request, "projects": json_util.loads(all_projects), "directions": json_util.loads(directions)}, status_code=401)
+            case _:
+                if request.url.path.startswith('/project/'):
+                    project = await read_file(request.url.path.split('/')[-1])
+                    response = templates.TemplateResponse("project.html",{"request": request, "project": json_util.loads(project)}, status_code=401)
+    return response
 
 @app.get("/", response_class=HTMLResponse)
-async def root(request: Request):
+async def root(request: Request, user: User = Depends(current_active_user)):
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/statistic", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("statistic.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    return templates.TemplateResponse("statistic.html", {"request": request, "user": user})
 
 @app.get("/profile", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("profile.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    return templates.TemplateResponse("profile.html", {"request": request, "user": user})
 
 @app.get("/noc", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("noc.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    return templates.TemplateResponse("noc.html", {"request": request, "user": user})
 
 @app.get("/incom_app", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("incom_app.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    if user.is_superuser:
+        incom_apps = await get_applications(user)
+    else:
+        incom_apps = await get_user_applications(user)
+    return templates.TemplateResponse("incom_app.html", {"request": request, "user": user, "apps" : json_util.loads(incom_apps)})
 
 @app.get("/projects", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("projects.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    all_projects = await get_files()
+    directions = await get_all_directions()
+    return templates.TemplateResponse("projects.html", {"request": request, "user": user, "projects": json_util.loads(all_projects), "directions": json_util.loads(directions)})
+
+@app.get("/project/{project_id}", response_class=HTMLResponse)
+async def root(project_id, request: Request, user: User = Depends(current_active_user)):
+    project = await read_file(project_id)
+    return templates.TemplateResponse("project.html", {"request": request, "user": user, "project": json_util.loads(project)})
+
+@app.get("/appplication", response_class=HTMLResponse)
+async def root( request: Request, app_id: str = Query(None), user: User = Depends(current_active_user)):
+    application = await read_application(app_id)
+    return templates.TemplateResponse("aplication.html", {"request": request, "user": user, "project": json_util.loads(application), "app_id": app_id})
 
 '''
 Максимальный размер BSON в монго составляет 16 Мбайт. Это можно исправить, но займусь этим потом

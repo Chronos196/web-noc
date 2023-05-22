@@ -56,8 +56,12 @@
                         <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
                     </div>
                     <button id="add_request">Добавить заявку</button>
-                    <a href="./profile" class="profile">
-                        <span>Фамилия <br> Имя</span>
+                    <a href="./profile" class="{%- if user -%}profile{%- else-%}profile_not_auth{%- endif-%}">
+                        {%- if user -%}
+                        <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
+                        {%- else -%}
+                        <span> Личный <br> кабинет</span>
+                        {%- endif -%}
                         <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
                     </a>
                 </div>
@@ -71,7 +75,17 @@
                     <div class="filter-block">
                         <h3>Направления</h3>
                         <div>
-                        <label class="filter-item">
+                            {% if directions |length != 0 -%}
+                            {% for direction in directions -%}
+                            <label class="filter-item">
+                                <input type="checkbox" name="{{direction['name']}}">
+                                <span>{{direction['name']}}</span>
+                            </label>
+                            {% endfor -%}
+                            {% else -%}
+                            <h2>Направлений нет</h2>
+                            {% endif %}
+                        <!-- <label class="filter-item">
                             <input type="checkbox" name="1_1">
                             <span>a</span>
                         </label>
@@ -90,36 +104,25 @@
                         <label class="filter-item">
                             <input type="checkbox" name="1_5">
                             <span>Новые технологии</span>
-                        </label>
-                        </div>
-                    </div>
-                    <div class="filter-block">
-                        <h3>Рынок</h3>
-                        <div>
-                        <label class="filter-item">
-                            <input type="checkbox" name="2_1">
-                            <span>Муниципальный</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="2_2">
-                            <span>Областной</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="2_3">
-                            <span>Федеральный</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="2_4">
-                            <span>Государственный</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="2_5">
-                            <span>Мировой</span>
-                        </label>
+                        </label> -->
                         </div>
                     </div>
                 </div>
+                {% if projects |length != 0 -%}
                 <ol class="project_list">
+                {% for project in projects -%}
+                <li class="project_list_item" name="{{project['preview']['Направление']}}">
+                    <a class="project_list_item_link" href="/project/{{project['_id']}}">
+                        <p>Направление: <b>{{project['preview']['Направление']}}</b></p>
+                        <h1>{{project['preview']['Название проекта']}}</h1>
+                    </a>
+                </li>
+                {% endfor -%}
+                </ol>
+                {% else -%}
+                <h2>Проектов нет</h2>
+                {% endif %}
+                <!-- <ol class="project_list">
                     <li class="project_list_item" name="1_5 2_3">
                         <a class="project_list_item_link" href="#">
                             <p>Направление: <b>Новые технологии</b></p>
@@ -156,7 +159,7 @@
                             <h1>Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов</h1>
                         </a>
                     </li>
-                </ol>
+                </ol> -->
             </div>
         </main>
 
