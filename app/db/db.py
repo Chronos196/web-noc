@@ -58,14 +58,14 @@ async def get_file_content(file_id, isApplications = False):
 async def get_files_preview(isApplications = False):
     result = []
     collection = get_collection(isApplications)
-    async for x in collection.find({}, {"_id": 1, "preview": 1}):
+    async for x in collection.find({}, {"_id": 1, "preview": 1, 'keywords': 1}):
         result.append(x)
     return result
 
 async def get_user_files(user_id, isApplications = False):
     result = []
     collection = get_collection(isApplications)
-    async for x in collection.find({'user_id' : ObjectId(user_id)}, {'preview': 1, '_id' : 1}):
+    async for x in collection.find({'user_id' : ObjectId(user_id)}, {'preview': 1, '_id' : 1, 'keywords': 1}):
         result.append(x)
     return result
 

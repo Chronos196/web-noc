@@ -75,9 +75,13 @@ blackoutForm.onclick = () => {
     blackoutForm.style.display = 'none';
     addReqForm.style.display = 'none';
     let auth_block = document.querySelector('div.auth_block');
+    let uniquenessBlock = document.querySelector('.uniqueness_details');
     if (auth_block){
         auth_block.parentNode.removeChild(auth_block);}
-    location.reload();
+    if (uniquenessBlock){
+        uniquenessBlock.parentNode.removeChild(uniquenessBlock);}
+    else{
+    location.reload();}
 };
 
 menuElements.forEach(element => {
