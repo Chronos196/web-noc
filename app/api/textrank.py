@@ -7,11 +7,13 @@ import nltk
 from nltk.corpus import stopwords
 nltk.download ("stopwords")
 
+from typing import List
+
 class TextRank():
     def __init__(self) -> None:
         self._stops = list(set(stopwords.words("russian")))
 
-    def get_keywords(self, text: str) -> list[str]:
+    def get_keywords(self, text: str) -> List[str]:
         text_clean = ""
         for i in text.split():
             if i not in self._stops:
@@ -19,7 +21,7 @@ class TextRank():
         return keywords.keywords(text_clean,language="russian").split("\n")
 
 class FileParser():
-    def __init__(self, get_keywords: Callable[[str], list[str]], file: UploadFile = File(...)) -> None:
+    def __init__(self, get_keywords: Callable[[str], List[str]], file: UploadFile = File(...)) -> None:
         self.__preview_heads = ['Направление', 'Название проекта']
         self.__file = file
         self.__get_keywords = get_keywords

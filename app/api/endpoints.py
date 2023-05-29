@@ -102,8 +102,15 @@ async def root(project_id, request: Request, user: User = Depends(current_active
 
 @app.get("/appplication", response_class=HTMLResponse)
 async def root( request: Request, app_id: str = Query(None), user: User = Depends(current_active_user)):
-    application = await read_application(app_id)
-    return templates.TemplateResponse("aplication.html", {"request": request, "user": user, "project": json_util.loads(application), "app_id": app_id})
+    try:
+        application = await read_application(app_id)
+        return templates.TemplateResponse("aplication.html", {"request": request, "user": user, "project": json_util.loads(application), "app_id": app_id})
+    except:
+        if user.is_superuser:
+            incom_apps = await get_applications(user)
+        else:
+            incom_apps = await get_user_applications(user)
+        return templates.TemplateResponse("incom_app.html", {"request": request, "user": user, "apps" : json_util.loads(incom_apps)})
 
 '''
 Максимальный размер BSON в монго составляет 16 Мбайт. Это можно исправить, но займусь этим потом

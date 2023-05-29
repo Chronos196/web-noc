@@ -4,6 +4,8 @@ from typing import Optional
 from pydantic import EmailStr
 from fastapi_users import models
 
+from typing import List
+
 
 class UserRead(schemas.BaseUser[PydanticObjectId]):
     id: models.ID
@@ -31,5 +33,5 @@ class UserUpdate(schemas.BaseUserUpdate):
     is_active: Optional[bool]
     is_superuser: Optional[bool]
     is_verified: Optional[bool]
-    projects: Optional[list[models.ID]]
-    applications: Optional[list[models.ID]]
+    projects: Optional[List[models.ID]]
+    applications: Optional[List[models.ID]]

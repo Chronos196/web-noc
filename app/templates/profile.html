@@ -74,8 +74,8 @@
                             <input type="file" id="d-photo" name="file" accept=".jpeg,.png,.pic">
                         </div>
                         <div class="initials">
-                            <input type = "text" value="{{ user.name.title()}}" class="name">
-                            <input type = "text" value="{{ user.surname.title()}}" class="surname">
+                            <input type = "text" placeholder="{{ user.name.title()}}" class="name">
+                            <input type = "text" placeholder="{{ user.surname.title()}}" class="surname">
                         </div>
                     </div>
                     <div class="lk-2">
@@ -83,7 +83,7 @@
                         <div class="data">
                             <div class = "all-data">
                                 <img src = "../static/img/phone.svg" widthg="19.93px" heihgt="19.87px" class="icon-img">
-                                <input type = "tel" value="
+                                <input type = "tel" placeholder="
                                 {%- if user.phone_number -%}
                                 {{user.phone_number}}
                                 {%- else -%}
@@ -92,11 +92,11 @@
                             </div>
                             <div class = "all-data">
                                 <img src = "../static/img/mail.svg" widthg="20px" heihgt="16px" class="icon-img">
-                                <input type = "email" value="{{ user.email}}" class="data-text">
+                                <input type = "email" placeholder="{{ user.email}}" class="data-text">
                             </div>
                             <div class = "all-data">
                                  <img src = "../static/img/mail.svg" width="24px" heihgt="23px" class="icon-img">
-                                 <input type = "text"  value="Смена пароля" class="data-text">
+                                 <input type = "text"  placeholder="Смена пароля" class="data-text">
                             </div>
                         </div>
                     </div>

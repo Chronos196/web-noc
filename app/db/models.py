@@ -7,6 +7,7 @@ from fastapi_users import models
 
 from app.api.textrank import FileParser
 
+from typing import List
 
 moscow_tz = pytz.timezone('Europe/Moscow')
 
@@ -30,8 +31,8 @@ class User(BeanieBaseUser, Document):
     is_active: bool = True
     is_superuser: bool = False
     is_verified: bool = False
-    projects: list[models.ID] = []
-    applications: list[models.ID] = []
+    projects: List[models.ID] = []
+    applications: List[models.ID] = []
 
 
 class Direction():

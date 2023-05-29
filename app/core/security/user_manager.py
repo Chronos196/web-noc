@@ -12,6 +12,8 @@ from app.db.models import User
 
 from app.core.config import SECRET
 
+from typing import Union
+
 class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
     reset_password_token_secret = SECRET
     verification_token_secret = SECRET
@@ -29,7 +31,7 @@ class UserManager(ObjectIDIDMixin, BaseUserManager[User, PydanticObjectId]):
     ):
         print(f"Verification requested for user {user.id}. Verification token: {token}")
 
-    async def on_after_login(self, user: User, request: Request | None = None, response: Response | None = None) -> Coroutine[Any, Any, None]:
+    async def on_after_login(self, user: User, request: Union[Request, None] = None, response: Union[Response, None] = None) -> Coroutine[Any, Any, None]:
         print(user.email)
         return await super().on_after_login(user, request, response)
 

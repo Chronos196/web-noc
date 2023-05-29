@@ -185,8 +185,14 @@ main{
     padding-right: 40px;
     padding-left: 40px;
     overflow-y: scroll;
+    display: flex;
+    justify-content: center;
 }
 
+.project_list_main h2{
+    margin-top: auto;
+    margin-bottom: auto;
+}
 .project_list_main::-webkit-scrollbar{
     display: none;
 }
