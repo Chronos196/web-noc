@@ -116,10 +116,10 @@ async def upload_file(response: Response, file: UploadFile = File(...), user: Us
     file_size_mb = file_size / (1024 * 1024)
     file.file.seek(0)
 
-    if not file.filename.endswith(".docx"):
-        return {"status":"InvalidExtension", "filename":file.filename}
-    elif file.filename == '' or file_size / 1024 == 0:
+    if file.filename == '' or file_size / 1024 == 0:
         return {"status": "EmptyFile"}
+    elif not file.filename.endswith(".docx"):
+        return {"status":"InvalidExtension", "filename":file.filename}
     elif file_size_mb > 8:
         return {"status": "TooMuch", "filename": file.filename}
     else:

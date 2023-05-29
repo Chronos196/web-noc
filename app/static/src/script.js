@@ -67,7 +67,7 @@ addReqButton.addEventListener('click', () => {
     blackoutForm.style.display = 'block';
     addReqForm.style.display = 'block';
     var text = form.querySelector('.form-text');
-    text.innerHTML = 'Загрузите документ в формате<br> <b>.pdf</b> или <b>.doc</b>';
+    text.innerHTML = 'Загрузите документ в формате<br> <b>.docx</b>';
 });
 
 
@@ -100,9 +100,14 @@ form.addEventListener('submit', function(event) {
     xhr.send(formData);
     xhr.onload = function() {
         var jsonText = JSON.parse(xhr.responseText);
+        console.log(xhr.responseText);
         if (jsonText['detail'] === "Unauthorized"){
             var text = form.querySelector('.form-text');
             text.innerHTML = `<font color='red'>Что бы отправить файл, нужно авторизоваться</font>`;
+        }
+        if (jsonText['status'] === "InvalidExtension"){
+            var text = form.querySelector('.form-text');
+            text.innerHTML = `<font color='red'>Файл <b>${jsonText["filename"]}</b> имеет не верный формат. Необходим формат <b>.docx</b></font>`;
         }
         if (jsonText['status'] === "Success"){
             var text = form.querySelector('.form-text');
