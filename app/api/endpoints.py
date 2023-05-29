@@ -48,7 +48,7 @@ async def modify_response(request, call_next):
     if response.status_code == 401:
         match request.url.path:
             case '/':
-                response = templates.TemplateResponse("index.html", {"request": request}, status_code=401)
+                response = templates.TemplateResponse("statistic.html", {"request": request}, status_code=401)
             case '/statistic':
                 response = templates.TemplateResponse("statistic.html",{"request": request}, status_code=401)
             case '/noc':
@@ -67,7 +67,7 @@ async def modify_response(request, call_next):
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request, user: User = Depends(current_active_user)):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("statistic.html", {"request": request, "user": user})
 
 @app.get("/statistic", response_class=HTMLResponse)
 async def root(request: Request, user: User = Depends(current_active_user)):
