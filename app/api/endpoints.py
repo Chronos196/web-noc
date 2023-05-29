@@ -46,23 +46,21 @@ app.include_router(
 async def modify_response(request, call_next):
     response = await call_next(request)
     if response.status_code == 401:
-        match request.url.path:
-            case '/':
-                response = templates.TemplateResponse("statistic.html", {"request": request}, status_code=401)
-            case '/statistic':
-                response = templates.TemplateResponse("statistic.html",{"request": request}, status_code=401)
-            case '/noc':
-                response = templates.TemplateResponse("noc.html",{"request": request}, status_code=401)
-            case '/incom_app':
-                response = templates.TemplateResponse("incom_app.html",{"request": request}, status_code=401)
-            case '/projects':
-                all_projects = await get_files()
-                directions = await get_all_directions()
-                response = templates.TemplateResponse("projects.html",{"request": request, "projects": json_util.loads(all_projects), "directions": json_util.loads(directions)}, status_code=401)
-            case _:
-                if request.url.path.startswith('/project/'):
-                    project = await read_file(request.url.path.split('/')[-1])
-                    response = templates.TemplateResponse("project.html",{"request": request, "project": json_util.loads(project)}, status_code=401)
+        if request.url.path == '/':
+            response = templates.TemplateResponse("statistic.html", {"request": request}, status_code=401)
+        elif request.url.path == '/statistic':
+            response = templates.TemplateResponse("statistic.html",{"request": request}, status_code=401)
+        elif request.url.path == '/noc':
+            response = templates.TemplateResponse("noc.html",{"request": request}, status_code=401)
+        elif request.url.path == '/incom_app':
+            response = templates.TemplateResponse("incom_app.html",{"request": request}, status_code=401)
+        elif request.url.path == '/projects':
+            all_projects = await get_files()
+            directions = await get_all_directions()
+            response = templates.TemplateResponse("projects.html",{"request": request, "projects": json_util.loads(all_projects), "directions": json_util.loads(directions)}, status_code=401)
+        elif request.url.path.startswith('/project/'):
+            project = await read_file(request.url.path.split('/')[-1])
+            response = templates.TemplateResponse("project.html",{"request": request, "project": json_util.loads(project)}, status_code=401)
     return response
 
 @app.get("/", response_class=HTMLResponse)
