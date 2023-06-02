@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>НОЦ Аналитика</title>
-        <link rel="stylesheet" href="../static/css/statistic-style.css">
+        <link rel="stylesheet" href="../static/css/directions_style.css">
     </head>
     <body>
         <header>
@@ -11,7 +11,7 @@
                 </div>
                 <ul class="nav-items">
                     <li class="nav-item">
-                        <a href="./statistic" class="nav-item-link active" id="nav-item-1">
+                        <a href="./statistic" class="nav-item-link" id="nav-item-1">
                             <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
                             <span>Статистика</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -25,7 +25,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="./directions" class="nav-item-link" id="nav-item-3">
+                        <a href="./directions" class="nav-item-link active" id="nav-item-3">
                             <img src="../static/img/chart.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>Направления</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -66,21 +66,18 @@
                     </a>
                 </div>
             </div>
-            <div class="statistic-main">
-                <div class="project_processing">
-                    <canvas id="project_processing_chart" width="350" height="450"></canvas>
-                </div>
-                <div class="budget">
-                    <canvas id="budget_chart" width="650" height="450"></canvas>
-                </div>
-                <div class="intersections_projects">
-                    <div>
-                        <canvas id="intersections_chart" width="400" height="450"></canvas>
-                    </div>
-                    <div id="container">
-                        <canvas id="process_work_сhart"  width="600" height="450"></canvas>
-                    </div>
-                </div>
+            <div class="directions_list_main">
+                {% if directions |length != 0 -%}
+                <ol class="directions_list">
+                {% for direction in directions -%}
+                <li class="directions_list_item">
+                        <h2>{{direction['name']}}</h2>
+                </li>
+                {% endfor -%}
+                </ol>
+                {% else -%}
+                <h2>Направлений нет</h2>
+                {% endif %}
             </div>
         </main>
 
@@ -100,8 +97,6 @@
                 </div>
             </form>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
         <script src="../static/src/script.js"></script>
-        <script src="../static/src/statistic.js"></script>
     </body>
 </html>

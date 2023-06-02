@@ -54,6 +54,9 @@ async def modify_response(request, call_next):
             response = templates.TemplateResponse("noc.html",{"request": request}, status_code=401)
         elif request.url.path == '/incom_app':
             response = templates.TemplateResponse("incom_app.html",{"request": request}, status_code=401)
+        elif request.url.path == '/directions':
+            directions = await get_all_directions()
+            response = templates.TemplateResponse("directions.html", {"request": request, "directions": json_util.loads(directions)})
         elif request.url.path == '/projects':
             all_projects = await get_files()
             directions = await get_all_directions()
@@ -109,6 +112,11 @@ async def root( request: Request, app_id: str = Query(None), user: User = Depend
         else:
             incom_apps = await get_user_applications(user)
         return templates.TemplateResponse("incom_app.html", {"request": request, "user": user, "apps" : json_util.loads(incom_apps)})
+
+@app.get("/directions", response_class=HTMLResponse)
+async def root(request: Request, user: User = Depends(current_active_user)):
+    directions = await get_all_directions()
+    return templates.TemplateResponse("directions.html", {"request": request, "user": user, "directions": json_util.loads(directions)})
 
 '''
 Максимальный размер BSON в монго составляет 16 Мбайт. Это можно исправить, но займусь этим потом

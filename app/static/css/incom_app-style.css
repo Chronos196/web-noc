@@ -176,6 +176,20 @@ main{
     text-align: end;
 }
 
+.profile_not_auth{
+    padding: 0 40 0 40;
+    font-size: 20px;
+    color: #FFFFFF;
+    background-color: #456086;
+    border-radius: 10px;
+    border: thin solid #456086
+}
+
+.profile_not_auth:hover{
+    color: #456086;
+    background-color: #FFFFFF;
+}
+
 .profile-icon{
     margin-left: 5px;
 }
@@ -205,7 +219,7 @@ main{
 .project_list_item{
     position: relative;
     width: 700px;
-    background: url("../img/project_name_bg.png");
+    background: linear-gradient(90deg, #E9E6CE, #99AEB2);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: 100% 100%;
