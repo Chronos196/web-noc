@@ -15,6 +15,7 @@ from app.core.security.auth import auth_backend, fastapi_users, current_active_s
 
 from app.api.textrank import TextRank, FileParser
 
+import requests
 
 templates = Jinja2Templates(directory="app/templates")
 textRank = TextRank()
@@ -140,3 +141,19 @@ async def on_startup():
             User,
         ],
     )
+
+@app.get('/get_statistic/{keywords}')   #ключевые слова должны идти через знак &. Пример: один&два&три
+async def get_statistic(keywords):
+    api_key = "84ccd22f5cf21172101af023a36960cd"
+    url = f"https://api.elsevier.com/content/search/scopus?query={keywords}&apiKey={api_key}"
+    response = requests.get(url)
+
+    articles = response.json()["search-results"]["entry"]
+    years = {}
+    if 'error' not in articles[0].keys():
+        for article in articles:
+            year = article["prism:coverDate"].split("-")[0]
+            if year not in years:
+                years[year] = 0
+            years[year] += 1
+    return years 
