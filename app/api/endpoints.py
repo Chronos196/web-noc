@@ -17,6 +17,8 @@ from app.api.textrank import TextRank, FileParser
 
 from starlette.responses import Response
 
+import requests
+
 templates = Jinja2Templates(directory="app/templates")
 textRank = TextRank()
 app = FastAPI()
@@ -63,7 +65,9 @@ async def modify_response(request, call_next):
             response = templates.TemplateResponse("projects.html",{"request": request, "projects": json_util.loads(all_projects), "directions": json_util.loads(directions)}, status_code=401)
         elif request.url.path.startswith('/project/'):
             project = await read_file(request.url.path.split('/')[-1])
-            response = templates.TemplateResponse("project.html",{"request": request, "project": json_util.loads(project)}, status_code=401)
+            project_keywords = '&'.join(json_util.loads(project)['keywords'])
+            scopus_stat = await get_statistic(project_keywords)
+            response = templates.TemplateResponse("project.html",{"request": request, "project": json_util.loads(project), "scopus": scopus_stat}, status_code=401)
     return response
 
 @app.get("/", response_class=HTMLResponse)
@@ -99,13 +103,17 @@ async def root(request: Request, user: User = Depends(current_active_user)):
 @app.get("/project/{project_id}", response_class=HTMLResponse)
 async def root(project_id, request: Request, user: User = Depends(current_active_user)):
     project = await read_file(project_id)
-    return templates.TemplateResponse("project.html", {"request": request, "user": user, "project": json_util.loads(project)})
+    project_keywords = '&'.join(json_util.loads(project)['keywords'])
+    scopus_stat = await get_statistic(project_keywords)
+    return templates.TemplateResponse("project.html", {"request": request, "user": user, "project": json_util.loads(project), "scopus": scopus_stat})
 
 @app.get("/appplication", response_class=HTMLResponse)
 async def root( request: Request, app_id: str = Query(None), user: User = Depends(current_active_user)):
     try:
         application = await read_application(app_id)
-        return templates.TemplateResponse("aplication.html", {"request": request, "user": user, "project": json_util.loads(application), "app_id": app_id})
+        app_keywords = '&'.join(json_util.loads(application)['keywords'])
+        scopus_stat = await get_statistic(app_keywords)
+        return templates.TemplateResponse("aplication.html", {"request": request, "user": user, "project": json_util.loads(application), "app_id": app_id, "scopus": scopus_stat})
     except:
         if user.is_superuser:
             incom_apps = await get_applications(user)
@@ -192,3 +200,19 @@ async def on_startup():
             User,
         ],
     )
+
+@app.get('/get_statistic/{keywords}')   #ключевые слова должны идти через знак &. Пример: один&два&три
+async def get_statistic(keywords):
+    api_key = "84ccd22f5cf21172101af023a36960cd"
+    url = f"https://api.elsevier.com/content/search/scopus?query={keywords}&apiKey={api_key}"
+    response = requests.get(url)
+
+    articles = response.json()["search-results"]["entry"]
+    years = {}
+    if 'error' not in articles[0].keys():
+        for article in articles:
+            year = article["prism:coverDate"].split("-")[0]
+            if year not in years:
+                years[year] = 0
+            years[year] += 1
+    return years 

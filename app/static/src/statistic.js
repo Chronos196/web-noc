@@ -178,6 +178,12 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
+        datasets: {
+            bar: {
+                barPercentage: 0.4,
+                categoryPercentage: 0.6
+            }
+          },
         legend: {
             display: false,
         },
@@ -200,8 +206,8 @@ var myChart = new Chart(ctx, {
                     fontSize: 17,
                     fontColor: '#111'
                 },
-                barPercentage: 0.4,
-                categoryPercentage: 0.6
+                // barPercentage: 0.4,
+                // categoryPercentage: 0.6
             }]
         }
     }

@@ -3,7 +3,7 @@
         <title>НОЦ Аналитика</title>
         <link rel="stylesheet" href="../static/css/project-style.css">
     </head>
-    <body onload="showChartProject()">
+    <body onload="showChartProject({{scopus}})">
         <header>
             <nav class="site-navigation">
                 <div class="site-title">
@@ -136,9 +136,7 @@
                         <tr>
                             <td class="project_crit no_standart_td">Статистика по Scopus</td>
                             <td class="no_standart_td">
-                                <div class="chart">
-                                    <div class="x-axis"></div>
-                                </div>
+                                <canvas id="scopus_statistic" width="100" height="100"></canvas>
                             </td>
                         </tr>
                         <tr>
@@ -198,11 +196,12 @@
                   </label>
                   <input type="file" id="file-upload" name="file" accept=".pdf,.doc,.docx">
                 <div class="form_buttons">
-                    <button class="fill_form_butn" type="button">ЗАПОЛНИТЬ ФОРМУ</button>
+                    <a class="fill_form_butn" download href="../static/form/application_form.docx" >СКАЧАТЬ ФОРМУ</a>
                     <input class="send_doc_butn" type="submit" value="ОТПРАВИТЬ ДОКУМЕНТ">
                 </div>
             </form>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
         <script src="../static/src/script.js"></script>
         <script src="../static/src/project.js"></script>
     </body>

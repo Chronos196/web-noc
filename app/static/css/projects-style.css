@@ -386,10 +386,14 @@ main{
 }
 
 .fill_form_butn{
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
     color: #456086;
-    border-color: #456086;
     background-color: #FFFFFF;
-    border-style: solid;
+    border: solid #456086;
 }
 
 .send_doc_butn{
