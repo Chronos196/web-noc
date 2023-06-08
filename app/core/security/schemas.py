@@ -14,6 +14,7 @@ class UserRead(schemas.BaseUser[PydanticObjectId]):
     is_active: bool = True
     is_superuser: bool = False
     is_verified: bool = False
+    avatar_name: str
 
 
 class UserCreate(schemas.BaseUserCreate):
@@ -21,7 +22,7 @@ class UserCreate(schemas.BaseUserCreate):
     name: str
     surname: str
     password: str
-
+    avatar_name: str
 
 
 class UserUpdate(schemas.BaseUserUpdate):
@@ -34,3 +35,4 @@ class UserUpdate(schemas.BaseUserUpdate):
     is_verified: Optional[bool]
     projects: Optional[List[models.ID]]
     applications: Optional[List[models.ID]]
+    avatar_name: Optional[str]

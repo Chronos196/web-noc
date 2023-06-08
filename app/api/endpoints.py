@@ -1,6 +1,7 @@
 from fastapi import File, UploadFile, Request, Depends, FastAPI, status, Response, Query
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.db.db import save_file, get_file_content, accept_application, reject_application, get_files_preview, get_user_files, get_directions, get_direction_id
 from app.db.models import UserFile
@@ -11,7 +12,7 @@ from beanie import init_beanie
 
 from app.db.db import User, db
 from app.core.security.schemas import UserCreate, UserRead, UserUpdate
-from app.core.security.auth import auth_backend, fastapi_users, current_active_superuser, current_active_default_user, current_active_user
+from app.core.security.auth import auth_backend, fastapi_users, current_active_superuser, current_active_user, get_current_active_default_user
 
 from app.api.textrank import TextRank, FileParser
 
@@ -132,7 +133,7 @@ async def root(request: Request, user: User = Depends(current_active_user)):
 некоторую другую информацию
 '''
 @app.post("/upload_file/", status_code=400)
-async def upload_file(response: Response, file: UploadFile = File(...), user: User = Depends(current_active_default_user)):
+async def upload_file(response: Response, file: UploadFile = File(...), user: User = Depends(get_current_active_default_user)):
     file_size = file.file.seek(0, 2)
     file_size_mb = file_size / (1024 * 1024)
     file.file.seek(0)
@@ -186,7 +187,7 @@ async def get_applications(user: User = Depends(current_active_superuser)):
     return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, алекс пока не знает как это решить
 
 @app.get("/user-applications/")
-async def get_user_applications(user: User = Depends(current_active_default_user)):
+async def get_user_applications(user: User = Depends(get_current_active_default_user)):
     data = await get_user_files(user.id, True)
     return json_util.dumps(data, ensure_ascii=False) ### Кавычки экранированы, алекс пока не знает как это решить
 

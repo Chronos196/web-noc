@@ -1,4 +1,5 @@
 from beanie import PydanticObjectId
+from fastapi import Depends, HTTPException
 from fastapi_users import FastAPIUsers
 from fastapi_users.authentication import (
     AuthenticationBackend,
@@ -30,6 +31,10 @@ fastapi_users = FastAPIUsers[User, PydanticObjectId](get_user_manager, [auth_bac
 
 current_active_user = fastapi_users.current_user(active=True)
 
-current_active_default_user = fastapi_users.current_user(active=True, superuser=False)
-
 current_active_superuser = fastapi_users.current_user(active=True, superuser=True)
+
+async def get_current_active_default_user(user: User =Depends(current_active_user)):
+    if user and not user.is_superuser:
+        return user
+    else:
+        raise HTTPException(status_code=403, detail="Forbidden")
