@@ -90,9 +90,9 @@ function showChartProject(scopus_stat){
 const makeKeywordsLis  = (keywords) =>{
     result = "";
     for(var keyword in keywords){
-        result += `<li class="project_keyword_item">#${keywords[keyword]}</li>`
+        result += keywords[keyword] != "" ? `<li class="project_keyword_item">#${keywords[keyword]}</li>`: "";
     }
-    return result;
+    return result != "" ?  result: `<span class="project_keyword_item">Ключевых слов не найдено</span>`;
 };
 
 const uniquenessDetails = (direction, keywords, matchPercent) =>(

@@ -105,6 +105,10 @@ form.addEventListener('submit', function(event) {
             var text = form.querySelector('.form-text');
             text.innerHTML = `<font color='red'>Что бы отправить файл, нужно авторизоваться</font>`;
         }
+        if (jsonText['status'] === "DirectionEmpty"){
+            var text = form.querySelector('.form-text');
+            text.innerHTML = `<font color='red'>В файле <b>${jsonText["filename"]}</b> не указано Направление проекта</font>`;
+        }
         if (jsonText['status'] === "InvalidExtension"){
             var text = form.querySelector('.form-text');
             text.innerHTML = `<font color='red'>Файл <b>${jsonText["filename"]}</b> имеет не верный формат. Необходим формат <b>.docx</b></font>`;

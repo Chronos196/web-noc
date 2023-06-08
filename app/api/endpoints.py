@@ -112,7 +112,7 @@ async def root( request: Request, app_id: str = Query(None), user: User = Depend
     try:
         application = await read_application(app_id)
         app_keywords = '&'.join(json_util.loads(application)['keywords'])
-        scopus_stat = await get_statistic(app_keywords)
+        scopus_stat = await get_statistic(app_keywords) if app_keywords != '' else []
         return templates.TemplateResponse("aplication.html", {"request": request, "user": user, "project": json_util.loads(application), "app_id": app_id, "scopus": scopus_stat})
     except:
         if user.is_superuser:
@@ -146,7 +146,10 @@ async def upload_file(response: Response, file: UploadFile = File(...), user: Us
     else:
         file_parser = FileParser(textRank.get_keywords, file)
         await file_parser.parse_file()
-        direction_id = await get_direction_id(file_parser.preview['Направление'])
+        try:
+            direction_id = await get_direction_id(file_parser.preview['Направление'])
+        except:
+            return {"status": "DirectionEmpty", "filename": file.filename}
         user_file = UserFile(file.filename, user.id, direction_id, file_parser)
         await save_file(user_file.__dict__)
         response.status_code = status.HTTP_201_CREATED

@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>НОЦ Аналитика</title>
+        <link rel="stylesheet" href="../static/css/general-style.css">
         <link rel="stylesheet" href="../static/css/incom_app-style.css">
     </head>
     <body>
@@ -74,7 +75,7 @@
                 <li class="project_list_item">
                     <a class="project_list_item_link" href="/appplication?app_id={{app['_id']}}" data-category="a">
                         <p>Направление: <b>{{app['preview']['Направление']}}</b></p>
-                        <h1>{{app['preview']['Название проекта']}}</h1>
+                        <h1>{{app['preview'].get('Название проекта', 'Названия нет')}}</h1>
                     </a>
                 </li>
                 {% endfor -%}

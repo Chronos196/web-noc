@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>НОЦ Аналитика</title>
+        <link rel="stylesheet" href="../static/css/general-style.css">
         <link rel="stylesheet" href="../static/css/project-style.css">
     </head>
     <body onload="showChartProject({{scopus}})">
@@ -72,7 +73,7 @@
                 <div class="project_info">
                 <div class="project_name">
                     <p>Направление: <b>{{project['preview']['Направление']}}</b></p>
-                    <h1>{{project['preview']['Название проекта']}}</h1>
+                    <h1>{{project['preview'].get('Название проекта', 'Названия нет')}}</h1>
                 </div>
                 <div class="name_organisation left_cont_div">
                     <h3>Наименование организации</h3>
