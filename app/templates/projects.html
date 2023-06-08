@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>НОЦ Аналитика</title>
+        <link rel="stylesheet" href="../static/css/general-style.css">
         <link rel="stylesheet" href="../static/css/projects-style.css">
     </head>
     <body>
@@ -25,7 +26,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-item-link" id="nav-item-3">
+                        <a href="./directions" class="nav-item-link" id="nav-item-3">
                             <img src="../static/img/chart.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>Направления</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -51,112 +52,57 @@
         <main>
             <div class="top-content">
                 <div class="top-menu">
-                    <div class="search">
+                    <div class="search" {%- if not user -%} style="margin-left: auto; margin-right: auto;"{%- endif -%}>
                         <input type="text" placeholder="Поиск">
                         <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
                     </div>
-                    <button id="add_request">Добавить заявку</button>
-                    <a href="./profile" class="profile">
-                        <span>Фамилия <br> Имя</span>
+                    <button id="add_request" {%- if not user -%} style="display:none;"{%- endif -%}>Добавить заявку</button>
+                    <a href="/profile" class="{%- if user -%}profile{%- else-%}profile_not_auth{%- endif-%}">
+                        {%- if user -%}
+                        <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
                         <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                        {%- else -%}
+                        <span>Вход</span>
+                        {%- endif -%}
                     </a>
                 </div>
             </div>
             <div class="project_list_main">
                 <div class="filter">
+                    <div class="filter-block">
+                        <h3>Направления</h3>
+                        <div>
+                            {% if directions |length != 0 -%}
+                            {% for direction in directions -%}
+                            <label class="filter-item">
+                                <input type="checkbox" name="{{direction['name']}}">
+                                <span>{{direction['name']}}</span>
+                            </label>
+                            {% endfor -%}
+                            {% else -%}
+                            <h2>Направлений нет</h2>
+                            {% endif %}
+                        </div>
+                    </div>
                     <div class="filter-buttons">
                         <button class="filter-button">Применить</button>
                         <button class="filter-cancel-button">Отменить</button>
                     </div>
-                    <div class="filter-block">
-                        <h3>Направления</h3>
-                        <div>
-                        <label class="filter-item">
-                            <input type="checkbox" name="1_1">
-                            <span>a</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="1_2">
-                            <span>b</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="1_3">
-                            <span>c</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="1_4">
-                            <span>d</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="1_5">
-                            <span>Новые технологии</span>
-                        </label>
-                        </div>
-                    </div>
-                    <div class="filter-block">
-                        <h3>Рынок</h3>
-                        <div>
-                        <label class="filter-item">
-                            <input type="checkbox" name="2_1">
-                            <span>Муниципальный</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="2_2">
-                            <span>Областной</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="2_3">
-                            <span>Федеральный</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="2_4">
-                            <span>Государственный</span>
-                        </label>
-                        <label class="filter-item">
-                            <input type="checkbox" name="2_5">
-                            <span>Мировой</span>
-                        </label>
-                        </div>
-                    </div>
                 </div>
+                {% if projects |length != 0 -%}
                 <ol class="project_list">
-                    <li class="project_list_item" name="1_5 2_3">
-                        <a class="project_list_item_link" href="#">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>1_5 2_3</h1>
-                        </a>
-                    </li>
-                    <li class="project_list_item" name="1_4 2_1">
-                        <a class="project_list_item_link" href="#">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>1_4 2_1</h1>
-                        </a>
-                    </li>
-                    <li class="project_list_item" name="1_4 2_2">
-                        <a class="project_list_item_link" href="#">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>1_4 2_2</h1>
-                        </a>
-                    </li>
-                    <li class="project_list_item" name="1_3 2_4">
-                        <a class="project_list_item_link" href="#">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>1_3 2_4</h1>
-                        </a>
-                    </li>
-                    <li class="project_list_item" name="1_2 2_3">
-                        <a class="project_list_item_link" href="#">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>1_2 2_3</h1>
-                        </a>
-                    </li>
-                    <li class="project_list_item" name="1_1 2_5">
-                        <a class="project_list_item_link" href="./">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов</h1>
-                        </a>
-                    </li>
+                {% for project in projects -%}
+                <li class="project_list_item" name="{{project['preview']['Направление']}}">
+                    <a class="project_list_item_link" href="/project/{{project['_id']}}">
+                        <p>Направление: <b>{{project['preview']['Направление']}}</b></p>
+                        <h1>{{project['preview']['Название проекта']}}</h1>
+                    </a>
+                </li>
+                {% endfor -%}
                 </ol>
+                {% else -%}
+                <h2>Проектов нет</h2>
+                {% endif %}
             </div>
         </main>
 
@@ -171,7 +117,7 @@
                   </label>
                   <input type="file" id="file-upload" name="file" accept=".pdf,.doc,.docx">
                 <div class="form_buttons">
-                    <button class="fill_form_butn" type="button">ЗАПОЛНИТЬ ФОРМУ</button>
+                    <a class="fill_form_butn" download href="../static/form/application_form.docx" >СКАЧАТЬ ФОРМУ</a>
                     <input class="send_doc_butn" type="submit" value="ОТПРАВИТЬ ДОКУМЕНТ">
                 </div>
             </form>

@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="../static/css/general-style.css">
         <link rel="stylesheet" href="../static/css/project-style.css">
     </head>
-    <body>
+    <body onload="showChartProject({{scopus}})">
         <header>
             <nav class="site-navigation">
                 <div class="site-title">
@@ -12,35 +12,35 @@
                 </div>
                 <ul class="nav-items">
                     <li class="nav-item">
-                        <a href="./statistic" class="nav-item-link" id="nav-item-1">
+                        <a href="/statistic" class="nav-item-link" id="nav-item-1">
                             <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
                             <span>Статистика</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="./noc" class="nav-item-link" id="nav-item-2">
+                        <a href="/noc" class="nav-item-link" id="nav-item-2">
                             <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>НОЦ</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="./directions" class="nav-item-link" id="nav-item-3">
+                        <a href="/directions" class="nav-item-link" id="nav-item-3">
                             <img src="../static/img/chart.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>Направления</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="./projects" class="nav-item-link active" id="nav-item-4">
+                        <a href="/projects" class="nav-item-link active" id="nav-item-4">
                             <img src="../static/img/calendar.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>Проекты</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="./incom_app" class="nav-item-link" id="nav-item-5">
+                        <a href="/incom_app" class="nav-item-link" id="nav-item-5">
                             <img src="../static/img/chat.svg" class="nav-item-icon"   width="18px" height="18px">
                             <span>Входящие заявки</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -52,43 +52,47 @@
         <main>
             <div class="top-content">
                 <div class="top-menu">
-                    <div class="search">
+                    <div class="search" {%- if not user -%} style="margin-left: auto; margin-right: auto;"{%- endif -%}>
                         <input type="text" placeholder="Поиск">
                         <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
                     </div>
-                    <button id="add_request">Добавить заявку</button>
-                    <a href="./profile" class="profile">
-                        <span>Фамилия <br> Имя</span>
+                    <button id="add_request" {%- if not user -%} style="display:none;"{%- endif -%}>Добавить заявку</button>
+                    <a href="/profile" class="{%- if user -%}profile{%- else-%}profile_not_auth{%- endif-%}">
+                        {%- if user -%}
+                        <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
                         <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                        {%- else -%}
+                        <span>Вход</span>
+                        {%- endif -%}
                     </a>
                 </div>
             </div>
             <div class="project_main">
             <div class="left-content">
-                <a href="./projects" id="back_link">&#706; Проекты</a>
+                <a href="/projects" id="back_link">&#706; Проекты</a>
                 <div class="project_info">
                 <div class="project_name">
-                    <p>Направление: <b>Новые технологии</b></p>
-                    <h1>Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов</h1>
+                    <p>Направление: <b>{{project['preview']['Направление']}}</b></p>
+                    <h1>{{project['preview']['Название проекта']}}</h1>
                 </div>
                 <div class="name_organisation left_cont_div">
                     <h3>Наименование организации</h3>
-                    <p>Общество с ограниченной ответственностью &laquo;АКСАЛИТ Софт&raquo;</p>
+                    <p>{{project['content'].get('Наименование организации','не известно')}}</p>
                 </div>
                 <div class="project_cost left_cont_div">
                     <h3>Стоимость проекта</h3>
-                    <p class="total_cost">250 млн. руб</p>
+                    <p class="total_cost">{{project['content'].get('Стоимость проекта','не известно')}}</p>
                     <table class="cost_table">
                         <tr>
-                            <td class="cost">15к</td>
+                            <td class="cost">{{project['content'].get('Бюджет','не известно')}}</td>
                             <td class="cost_name">бюджет</td>
                         </tr>
                         <tr>
-                            <td class="cost">9к</td>
+                            <td class="cost">{{project['content'].get('Внебюджет','не известно')}}</td>
                             <td class="cost_name">Внебюджет</td>
                         </tr>
                         <tr>
-                            <td class="cost">6к</td>
+                            <td class="cost">{{project['content'].get('Местные источники','не известно')}}</td>
                             <td class="cost_name">Местные источники</td>
                         </tr>
                     </table>
@@ -96,48 +100,31 @@
                 </div>
                 <div class="project_market left_cont_div">
                     <h3>Рынок проекта</h3>
-                    <p><b>Федеральный</b></p>
+                    <p><b>{{project['content'].get('Рынок проекта','не известно')}}</b></p>
                 </div>
                 <div class="director left_cont_div">
-                    <h3>Руководитель</h3>
-                    <p><b>Директор</b></p>
-                    <p>Яковлева Оксана Александровна</p>
+                    <h3>Исполнители</h3>
+                    <p>{{project['content'].get('Исполнители','не известно')}}</p>
                 </div>
                 <div class="implem_period left_cont_div">
                     <h3>Срок реализации</h3>
-                    <p><b>Даты: <data>04.03.2019 - 03.08.2020</data></b></p>
-                    <p class="implem_period_info">Экспериментальные разработки</p>
+                    <p><b>Даты(продолжительность): <data>{{project['content'].get('Срок реализации','не известно')}}</data></b></p>
                 </div>
                 <div class="project_objective left_cont_div">
                   <h3>Цель проекта</h3>
-                  <p>Автоматизация процесса сортировки твердых бытовых отходов позволит повысит производительность мусоросортировочных комплексов – увеличит процент отбора материалов для вторичного использования, тем самым сократив долю неперерабатываемого мусора в несколько раз.</p>
+                  <p>{{project['content'].get('Цель проекта','не известно')}}</p>
                 </div>
                 <div class="justifi_need left_cont_div">
                     <h3>Обоснование необходимости проекта</h3>
-                    <p><b>Проблемы:</b></p>
-                    <ol>
-                        <li>отсутствие культуры сортировки мусора жителей городов;</li>
-                        <li>высокий процент неперерабатываемого мусора на мусоросортировочных комплексах;</li>
-                        <li>дорогостоящее импортное оборудование</li>
-                    </ol>
-                    <p><b>Возможности:</b></p>
-                    <p>В проекте участвуют признанные эксперты из разных областей. Компания «АКСАЛИТ Софт» является экспертом в области анализа изображений на видеопотоке. ОАО «ПО «УОМЗ» производит оптико-электронные системы различного назначения. АО «ПНО «Орион» специализируется на разработке и выпуске изделий микрофотоэлектроники для оснащения оптико-электронных систем и комплексов в интересах науки промышленности, обороны, космической и других отраслей.</p>
+                    <p>{{project['content'].get('Обоснование необходимости проекта','не известно')}}</p>
                 </div>
                 <div class="project_result left_cont_div">
                     <h3>Результат проекта</h3>
-                    <p>Конечным продуктом проекта является оптический сепаратор со следующими конкурентными преимуществами: </p>
-                    <ol>
-                        <li>100% разделение всех видов пластика;</li>
-                        <li>размер определяемой фракции от 10 до 300 мм;</li>
-                        <li>производительность 2-8 тонн в час;</li>
-                        <li>средняя потребляемая мощность 8 кВт/ч;</li>
-                        <li>отечественное производство;</li>
-                        <li>доступность цены по сравнению с зарубежными аналогами</li>
-                    </ol>
+                    <p>{{project['content'].get('Результат проекта','не известно')}}</p>
                 </div>
                 <div class="project_consumers left_cont_div">
                     <h3>Потребители проекта</h3>
-                    <p>Основными потребителями являются мусоросортировочные комплексы и предприятия по переработке вторичного сырья со всей страны.</p>
+                    <p>{{project['content'].get('Потребители проекта','не известно')}}</p>
                 </div>
                 </div>
             </div>
@@ -150,9 +137,7 @@
                         <tr>
                             <td class="project_crit no_standart_td">Статистика по Scopus</td>
                             <td class="no_standart_td">
-                                <div class="chart">
-                                    <div class="x-axis"></div>
-                                </div>
+                                <canvas id="scopus_statistic" width="100" height="100"></canvas>
                             </td>
                         </tr>
                         <tr>
@@ -161,7 +146,7 @@
                     </table>
                 </div>
                 <div class="sum_data_block">
-                    <img src="../static/img/question_mark.svg" class="question-mark" title="Подробная информация" width="21px" height="21px">
+                    <img src="../static/img/question_mark.svg" class="question-mark" title="Подробная информация" width="21px" height="21px" onclick="showUniqueness('{{project['preview']['Направление']}}', {{project['keywords']}})">
                     <h3 class="sum_data_block_title">Уникальность</h3>
                     <table сlass="sum_data_block_table">
                         <tr>
@@ -180,7 +165,7 @@
                     <table сlass="sum_data_block_table">
                         <tr>
                             <td class="project_crit no_standart_td">Сроки реализации</td>
-                            <td class="value_project_crit_data no_standart_td">2019 - 2020 год</td>
+                            <td class="value_project_crit_data no_standart_td">{{project['content'].get('Срок реализации','не известно')}}</td>
                         </tr>
                         <tr>
                             <td class="project_crit no_standart_td">Стадия работы</td>
@@ -193,7 +178,7 @@
                         </tr>
                         <tr>
                             <td class="project_crit no_standart_td">Требуемый бюджет</td>
-                            <td class="value_project_crit no_standart_td">250 млн. руб</td>
+                            <td class="value_project_crit no_standart_td">{{project['content'].get('Стоимость проекта','не известно')}}</td>
                         </tr>
                     </table>
                 </div>
@@ -217,6 +202,7 @@
                 </div>
             </form>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
         <script src="../static/src/script.js"></script>
         <script src="../static/src/project.js"></script>
     </body>

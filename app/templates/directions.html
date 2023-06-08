@@ -2,8 +2,7 @@
     <head>
         <title>НОЦ Аналитика</title>
         <link rel="stylesheet" href="../static/css/general-style.css">
-        <link rel="stylesheet" href="../static/css/profile-style.css">
-        <meta charset="utf-8">
+        <link rel="stylesheet" href="../static/css/directions_style.css">
     </head>
     <body>
         <header>
@@ -27,7 +26,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="./directions" class="nav-item-link" id="nav-item-3">
+                        <a href="./directions" class="nav-item-link active" id="nav-item-3">
                             <img src="../static/img/chart.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>Направления</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -53,60 +52,33 @@
         <main>
             <div class="top-content">
                 <div class="top-menu">
-                    <div class="search">
+                    <div class="search" {%- if not user -%} style="margin-left: auto; margin-right: auto;"{%- endif -%}>
                         <input type="text" placeholder="Поиск">
                         <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
                     </div>
-                    <button id="add_request">Добавить заявку</button>
-                    <a href="./profile" class="profile">
+                    <button id="add_request" {%- if not user -%} style="display:none;"{%- endif -%}>Добавить заявку</button>
+                    <a href="/profile" class="{%- if user -%}profile{%- else-%}profile_not_auth{%- endif-%}">
+                        {%- if user -%}
                         <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
                         <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                        {%- else -%}
+                        <span>Вход</span>
+                        {%- endif -%}
                     </a>
                 </div>
             </div>
-            <div class="project_main">
-                <form action="" method="post" enctype="multipart/form-data" class="upload-lk-info">
-                <div class = "lk">
-                    <div class="lk-1">
-                        <h3 class="lk-profile">Профиль</h3>
-                        <div class="avatar">
-                            <img  src="../static/img/avatar.svg" class="lk-profile-icon" alt = "аватарка" width="61px" height="61px" class="avatar-icon">
-                            <label for="d-photo" class="upload-avatar-image"><span>Загрузить фото</span></label>
-                            <input type="file" id="d-photo" name="file" accept=".jpeg,.png,.pic">
-                        </div>
-                        <div class="lk-initials">
-                            <input type = "text" placeholder="{{ user.name.title()}}" class="name">
-                            <input type = "text" placeholder="{{ user.surname.title()}}" class="surname">
-                        </div>
-                    </div>
-                    <div class="lk-2">
-                        <h3 class="personal-date">Личные Данные</h3>
-                        <div class="data">
-                            <div class = "all-data">
-                                <img src = "../static/img/phone.svg" widthg="19.93px" heihgt="19.87px" class="icon-img">
-                                <input type = "tel" placeholder="
-                                {%- if user.phone_number -%}
-                                {{user.phone_number}}
-                                {%- else -%}
-                                Не задан
-                                {%- endif -%}" class="data-text">
-                            </div>
-                            <div class = "all-data">
-                                <img src = "../static/img/mail.svg" widthg="20px" heihgt="16px" class="icon-img">
-                                <input type = "email" placeholder="{{ user.email}}" class="data-text">
-                            </div>
-                            <div class = "all-data">
-                                 <img src = "../static/img/password.svg" width="24px" heihgt="23px" class="icon-img">
-                                 <input type = "text"  placeholder="Смена пароля" class="data-text">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class = "button-save">
-                    <button id="save-date" type="submit">Сохранить данные</button>
-                    <button id="logout_button" type="button">Выход</button>
-                </div>
-                </form>
+            <div class="directions_list_main">
+                {% if directions |length != 0 -%}
+                <ol class="directions_list">
+                {% for direction in directions -%}
+                <li class="directions_list_item">
+                        <h2>{{direction['name']}}</h2>
+                </li>
+                {% endfor -%}
+                </ol>
+                {% else -%}
+                <h2>Направлений нет</h2>
+                {% endif %}
             </div>
         </main>
 
@@ -127,6 +99,5 @@
             </form>
         </div>
         <script src="../static/src/script.js"></script>
-        <script src="../static/src/profile.js"></script>
     </body>
 </html>

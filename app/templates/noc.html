@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>НОЦ Аналитика</title>
+        <link rel="stylesheet" href="../static/css/general-style.css">
         <link rel="stylesheet" href="../static/css/noc-style.css">
     </head>
     <body>
@@ -18,14 +19,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-item-link active" id="nav-item-2">
+                        <a href="./noc" class="nav-item-link active" id="nav-item-2">
                             <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>НОЦ</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-item-link" id="nav-item-3">
+                        <a href="./directions" class="nav-item-link" id="nav-item-3">
                             <img src="../static/img/chart.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>Направления</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -51,28 +52,36 @@
         <main>
             <div class="top-content">
                 <div class="top-menu">
-                    <div class="search">
+                    <div class="search" {%- if not user -%} style="margin-left: auto; margin-right: auto;"{%- endif -%}>
                         <input type="text" placeholder="Поиск">
                         <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
                     </div>
-                    <button id="add_request">Добавить заявку</button>
-                    <a href="./profile" class="profile">
-                        <span>Фамилия <br> Имя</span>
+                    <button id="add_request" {%- if not user -%} style="display:none;"{%- endif -%}>Добавить заявку</button>
+                    <a href="/profile" class="{%- if user -%}profile{%- else-%}profile_not_auth{%- endif-%}">
+                        {%- if user -%}
+                        <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
                         <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                        {%- else -%}
+                        <span>Вход</span>
+                        {%- endif -%}
                     </a>
                 </div>
             </div>
             <div class="noc_main">
                 <div class="noc_main_info">
                     <h1>О центре</h1>
-                    <p>Уральский межрегиональный научно-образовательный центр мирового уровня «Передовые производственные технологии и 
-                        материалы» создан для объединения потенциалов образовательных и научных организаций реального сектора Свердловской, 
-                        Челябинской и Курганской областей. Центр участвует в получении конкурентоспособных технологий и продуктов, и их 
-                        последующей коммерциализации, а также подготовке кадров для решения научно-технологических задач с целью прорывного 
-                        развития по приоритетным направлениям и повышения конкурентоспособности экономик субъектов в периметре центра.</p>
-                    <p>Уральский федеральный университет выступил инициатором создания и выполняет функции проектного офиса УМНОЦ.</p>
-                    <p>Идею создания научно-образовательного центра поддержал Президент России Владимир Путин в ходе визита в УрФУ в июле 
-                        2019 года.</p>
+                    <p>Научно-образовательный центр (НОЦ) представляет собой группировку организаций, занимающихся образовательной деятельностью 
+                        в области высшего образования и профессиональной подготовки, а также научных организаций и организаций реального сектора 
+                        экономики, поддерживаемую субъектом Российской Федерации и не имеющую статуса юридического лица. Данный центр действует в 
+                        соответствии с программой своей деятельности.</p>
+                </div>
+                <div class="noc_main_info">
+                    <p>Главная цель создания НОЦ заключается в формировании новой модели 
+                        исследований и разработок, которая будет основана на научно-образовательном и производственном взаимодействии между научными
+                         учреждениями, университетами и бизнес-структурами.</p>
+                </div>
+                <div class="noc_main_info">
+                    <p>Этот веб-сервис предназначен для получения заявок на проекты от Научно-образовательных центров (НОЦ) и проведения NLP-анализа данных проектов.</p>
                 </div>
             </div>
         </main>
@@ -88,7 +97,7 @@
                   </label>
                   <input type="file" id="file-upload" name="file" accept=".pdf,.doc,.docx">
                 <div class="form_buttons">
-                    <button class="fill_form_butn" type="button">ЗАПОЛНИТЬ ФОРМУ</button>
+                    <a class="fill_form_butn" download href="../static/form/application_form.docx" >СКАЧАТЬ ФОРМУ</a>
                     <input class="send_doc_butn" type="submit" value="ОТПРАВИТЬ ДОКУМЕНТ">
                 </div>
             </form>

@@ -1,4 +1,4 @@
-from fastapi import File, UploadFile, Request, Depends, FastAPI, status, Response
+from fastapi import File, UploadFile, Request, Depends, FastAPI, status, Response, Query
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
@@ -14,6 +14,8 @@ from app.core.security.schemas import UserCreate, UserRead, UserUpdate
 from app.core.security.auth import auth_backend, fastapi_users, current_active_superuser, current_active_default_user, current_active_user
 
 from app.api.textrank import TextRank, FileParser
+
+from starlette.responses import Response
 
 import requests
 
@@ -42,30 +44,87 @@ app.include_router(
     tags=["users"],
 )
 
+@app.middleware("http")
+async def modify_response(request, call_next):
+    response = await call_next(request)
+    if response.status_code == 401:
+        if request.url.path == '/':
+            response = templates.TemplateResponse("statistic.html", {"request": request}, status_code=401)
+        elif request.url.path == '/statistic':
+            response = templates.TemplateResponse("statistic.html",{"request": request}, status_code=401)
+        elif request.url.path == '/noc':
+            response = templates.TemplateResponse("noc.html",{"request": request}, status_code=401)
+        elif request.url.path == '/incom_app':
+            response = templates.TemplateResponse("incom_app.html",{"request": request}, status_code=401)
+        elif request.url.path == '/directions':
+            directions = await get_all_directions()
+            response = templates.TemplateResponse("directions.html", {"request": request, "directions": json_util.loads(directions)})
+        elif request.url.path == '/projects':
+            all_projects = await get_files()
+            directions = await get_all_directions()
+            response = templates.TemplateResponse("projects.html",{"request": request, "projects": json_util.loads(all_projects), "directions": json_util.loads(directions)}, status_code=401)
+        elif request.url.path.startswith('/project/'):
+            project = await read_file(request.url.path.split('/')[-1])
+            project_keywords = '&'.join(json_util.loads(project)['keywords'])
+            scopus_stat = await get_statistic(project_keywords)
+            response = templates.TemplateResponse("project.html",{"request": request, "project": json_util.loads(project), "scopus": scopus_stat}, status_code=401)
+    return response
 
 @app.get("/", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    return templates.TemplateResponse("statistic.html", {"request": request, "user": user})
 
 @app.get("/statistic", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("statistic.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    return templates.TemplateResponse("statistic.html", {"request": request, "user": user})
 
 @app.get("/profile", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("profile.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    return templates.TemplateResponse("profile.html", {"request": request, "user": user})
 
 @app.get("/noc", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("noc.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    return templates.TemplateResponse("noc.html", {"request": request, "user": user})
 
 @app.get("/incom_app", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("incom_app.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    if user.is_superuser:
+        incom_apps = await get_applications(user)
+    else:
+        incom_apps = await get_user_applications(user)
+    return templates.TemplateResponse("incom_app.html", {"request": request, "user": user, "apps" : json_util.loads(incom_apps)})
 
 @app.get("/projects", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("projects.html", {"request": request})
+async def root(request: Request, user: User = Depends(current_active_user)):
+    all_projects = await get_files()
+    directions = await get_all_directions()
+    return templates.TemplateResponse("projects.html", {"request": request, "user": user, "projects": json_util.loads(all_projects), "directions": json_util.loads(directions)})
+
+@app.get("/project/{project_id}", response_class=HTMLResponse)
+async def root(project_id, request: Request, user: User = Depends(current_active_user)):
+    project = await read_file(project_id)
+    project_keywords = '&'.join(json_util.loads(project)['keywords'])
+    scopus_stat = await get_statistic(project_keywords)
+    return templates.TemplateResponse("project.html", {"request": request, "user": user, "project": json_util.loads(project), "scopus": scopus_stat})
+
+@app.get("/appplication", response_class=HTMLResponse)
+async def root( request: Request, app_id: str = Query(None), user: User = Depends(current_active_user)):
+    try:
+        application = await read_application(app_id)
+        app_keywords = '&'.join(json_util.loads(application)['keywords'])
+        scopus_stat = await get_statistic(app_keywords) if app_keywords != '' else []
+        return templates.TemplateResponse("aplication.html", {"request": request, "user": user, "project": json_util.loads(application), "app_id": app_id, "scopus": scopus_stat})
+    except:
+        if user.is_superuser:
+            incom_apps = await get_applications(user)
+        else:
+            incom_apps = await get_user_applications(user)
+        return templates.TemplateResponse("incom_app.html", {"request": request, "user": user, "apps" : json_util.loads(incom_apps)})
+
+@app.get("/directions", response_class=HTMLResponse)
+async def root(request: Request, user: User = Depends(current_active_user)):
+    directions = await get_all_directions()
+    return templates.TemplateResponse("directions.html", {"request": request, "user": user, "directions": json_util.loads(directions)})
 
 '''
 Максимальный размер BSON в монго составляет 16 Мбайт. Это можно исправить, но займусь этим потом
@@ -78,16 +137,19 @@ async def upload_file(response: Response, file: UploadFile = File(...), user: Us
     file_size_mb = file_size / (1024 * 1024)
     file.file.seek(0)
 
-    if not file.filename.endswith(".docx"):
-        return {"status":"InvalidExtension", "filename":file.filename}
-    elif file.filename == '' or file_size / 1024 == 0:
+    if file.filename == '' or file_size / 1024 == 0:
         return {"status": "EmptyFile"}
+    elif not file.filename.endswith(".docx"):
+        return {"status":"InvalidExtension", "filename":file.filename}
     elif file_size_mb > 8:
         return {"status": "TooMuch", "filename": file.filename}
     else:
         file_parser = FileParser(textRank.get_keywords, file)
         await file_parser.parse_file()
-        direction_id = await get_direction_id(file_parser.preview['Направление'])
+        try:
+            direction_id = await get_direction_id(file_parser.preview['Направление'])
+        except:
+            return {"status": "DirectionEmpty", "filename": file.filename}
         user_file = UserFile(file.filename, user.id, direction_id, file_parser)
         await save_file(user_file.__dict__)
         response.status_code = status.HTTP_201_CREATED
@@ -157,3 +219,4 @@ async def get_statistic(keywords):
                 years[year] = 0
             years[year] += 1
     return years 
+

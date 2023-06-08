@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>НОЦ Аналитика</title>
+        <link rel="stylesheet" href="../static/css/general-style.css">
         <link rel="stylesheet" href="../static/css/incom_app-style.css">
     </head>
     <body>
@@ -25,7 +26,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-item-link" id="nav-item-3">
+                        <a href="./directions" class="nav-item-link" id="nav-item-3">
                             <img src="../static/img/chart.svg" class="nav-item-icon"  width="18px" height="18px">
                             <span>Направления</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
@@ -51,62 +52,40 @@
         <main>
             <div class="top-content">
                 <div class="top-menu">
-                    <div class="search">
+                    <div class="search" {%- if not user -%} style="margin-left: auto; margin-right: auto;"{%- endif -%}>
                         <input type="text" placeholder="Поиск">
                         <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
                     </div>
-                    <button id="add_request">Добавить заявку</button>
-                    <a href="./profile" class="profile">
-                        <span>Фамилия <br> Имя</span>
+                    <button id="add_request" {%- if not user -%} style="display:none;"{%- endif -%}>Добавить заявку</button>
+                    <a href="/profile" class="{%- if user -%}profile{%- else-%}profile_not_auth{%- endif-%}">
+                        {%- if user -%}
+                        <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
                         <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                        {%- else -%}
+                        <span>Вход</span>
+                        {%- endif -%}
                     </a>
                 </div>
             </div>
             <div class="project_list_main">
+                {% if user -%} 
+                {% if apps |length != 0 -%}
                 <ol class="project_list">
-                    <li class="project_list_item">
-                        <a class="project_list_item_link" href="#" data-category="a">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>a</h1>
-                        </a>
-                    </li>
-                    <li class="project_list_item">
-                        <a class="project_list_item_link" href="#" data-category="b"> 
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>b</h1>
-                        </a>
-                    </li>
-                    <li class="project_list_item">
-                        <a class="project_list_item_link" href="#" data-category="c">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>c</h1>
-                        </a>
-                    </li>
-                    <li class="project_list_item">
-                        <a class="project_list_item_link" href="#" data-category="b">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов
-                                Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов
-                                Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов
-                                Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов
-                                Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов
-                                Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов
-                            </h1>
-                        </a>
-                    </li>
-                    <li class="project_list_item">
-                        <a class="project_list_item_link" href="#" data-category="a">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>Разработка и производство оптического сепаратора для автоматической сортировки твердых бытовых отходов</h1>
-                        </a>
-                    </li>
-                    <li class="project_list_item">
-                        <a class="project_list_item_link" href="#" data-category="d">
-                            <p>Направление: <b>Новые технологии</b></p>
-                            <h1>d</h1>
-                        </a>
-                    </li>
+                {% for app in apps -%}
+                <li class="project_list_item">
+                    <a class="project_list_item_link" href="/appplication?app_id={{app['_id']}}" data-category="a">
+                        <p>Направление: <b>{{app['preview']['Направление']}}</b></p>
+                        <h1>{{app['preview'].get('Название проекта', 'Названия нет')}}</h1>
+                    </a>
+                </li>
+                {% endfor -%}
                 </ol>
+                {% else -%}
+                <h2>У вас нет входящих заявок</h2>
+                {% endif %}
+                {% else -%}
+                <h2>Чтобы посмотреть входящие заявки, нужно войти в аккаунт</h2>
+                {% endif %}
             </div>
         </main>
 
@@ -121,7 +100,7 @@
                   </label>
                   <input type="file" id="file-upload" name="file" accept=".pdf,.doc,.docx">
                 <div class="form_buttons">
-                    <button class="fill_form_butn" type="button">ЗАПОЛНИТЬ ФОРМУ</button>
+                    <a class="fill_form_butn" download href="../static/form/application_form.docx" >СКАЧАТЬ ФОРМУ</a>
                     <input class="send_doc_butn" type="submit" value="ОТПРАВИТЬ ДОКУМЕНТ">
                 </div>
             </form>
