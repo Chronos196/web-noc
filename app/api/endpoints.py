@@ -219,3 +219,4 @@ async def get_statistic(keywords):
                 years[year] = 0
             years[year] += 1
     return years 
+

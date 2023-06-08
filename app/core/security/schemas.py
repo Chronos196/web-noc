@@ -6,7 +6,6 @@ from fastapi_users import models
 
 from typing import List
 
-
 class UserRead(schemas.BaseUser[PydanticObjectId]):
     id: models.ID
     email: EmailStr
