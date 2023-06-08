@@ -151,7 +151,7 @@ main{
     outline: none;
   }
 
-.top-menu button{
+#add_request{
     width: 212px;
     height: 56px;
     margin-left: auto;
@@ -163,6 +163,12 @@ main{
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
+}
+
+#add_request:hover{
+    background-color: #FFFFFF;
+    color: #456086;
+    border: thin solid #456086;
 }
 
 .profile, .profile_not_auth{
@@ -219,6 +225,7 @@ main{
     background-color: #FFFFFF;
     border-radius: 5px;
     border: none;
+    transform-origin: top center;
 }
 
 #form form{
@@ -279,7 +286,7 @@ main{
 .auth_block{
     z-index: 150;
     width: 652px;
-    height: 455px;
+    height: 465px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -391,4 +398,28 @@ main{
     width: 110px;
     font-size: 12px;
     line-height: 18px;
+}
+
+.auth-reg-error{
+    display: none;
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    padding-top: 10px;
+}
+
+@keyframes shake {
+    0% { transform: translate(-50%, -50%) translateX(0) }
+    10% { transform: translate(-50%, -50%) translateX(5px) }
+    20% { transform: translate(-50%, -50%) translateX(-5px) }
+    30% { transform: translate(-50%, -50%) translateX(5px) }
+    40% { transform: translate(-50%, -50%) translateX(-5px) }
+    50% { transform: translate(-50%, -50%) translateX(5px) }
+    60% { transform: translate(-50%, -50%) translateX(-5px) }
+    70% { transform: translate(-50%, -50%) translateX(5px) }
+    80% { transform: translate(-50%, -50%) translateX(-5px) }
+    90% { transform: translate(-50%, -50%) translateX(5px) }
+    100% { transform: translate(-50%, -50%) translateX(0) }
 }

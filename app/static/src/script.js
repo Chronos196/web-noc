@@ -9,6 +9,7 @@ const authFormContentReg = `
         <input type = "text" placeholder="введите ваше имя" class="registration_text" name="name" required>
         <p class="initials">Фамилия</p>
         <input type = "text" placeholder="введите фамилию" class="registration_text" name="surname" required >
+        <p class= "initials auth-reg-error"></p>
         <p class="initials">Электронная почта</p>
         <input type = "email" placeholder="введите email" class="registration_text" name="email" required >
         <p class="initials">Пароль</p>
@@ -30,6 +31,7 @@ const authFormContentAuth = `
         <button id="open" class="open reg_active" type="button" onclick='getAuthForm()'>Вход</button>
     </div>
     <div class="data">
+        <p class= "initials auth-reg-error"></p>
         <p class="initials">Электронная почта</p>
         <input type = "email" placeholder="введите email" class="registration_text" name="username" required >
         <p class="initials">Пароль</p>
@@ -100,33 +102,34 @@ form.addEventListener('submit', function(event) {
     xhr.send(formData);
     xhr.onload = function() {
         var jsonText = JSON.parse(xhr.responseText);
+        var text = form.querySelector('.form-text');
         console.log(xhr.responseText);
         if (jsonText['detail'] === "Unauthorized"){
-            var text = form.querySelector('.form-text');
             text.innerHTML = `<font color='red'>Что бы отправить файл, нужно авторизоваться</font>`;
+            addReqForm.style.animation = "shake 0.7s 1";
         }
         if (jsonText['status'] === "DirectionEmpty"){
-            var text = form.querySelector('.form-text');
             text.innerHTML = `<font color='red'>В файле <b>${jsonText["filename"]}</b> не указано Направление проекта</font>`;
+            addReqForm.style.animation = "shake 0.7s 1";
         }
         if (jsonText['status'] === "InvalidExtension"){
-            var text = form.querySelector('.form-text');
             text.innerHTML = `<font color='red'>Файл <b>${jsonText["filename"]}</b> имеет не верный формат. Необходим формат <b>.docx</b></font>`;
+            addReqForm.style.animation = "shake 0.7s 1";
         }
         if (jsonText['status'] === "Success"){
-            var text = form.querySelector('.form-text');
             text.innerHTML = `Файл <b>${jsonText["filename"]}</b> был успешно отправлен`;
         } 
         else if (jsonText['status'] === "EmptyFile"){
-            var text = form.querySelector('.form-text');
             text.innerHTML = `<font color='red'>Вы не выбрали файл, либо он оказался пустым</font>`;
+            addReqForm.style.animation = "shake 0.7s 1";
         }
         else if (jsonText['status'] === "TooMuch"){
-            var text = form.querySelector('.form-text');
             text.innerHTML = `<font color='red'>Файл <b>${jsonText["filename"]}</b> превышает допустимый размер</font>`;
+            addReqForm.style.animation = "shake 0.7s 1";
         }
         form.reset();
     };
+    addReqForm.style.animation = "none";
 });
 
 if (notAuthForm){
@@ -144,6 +147,8 @@ if (notAuthForm){
 
 function makeAuth(event){
     event.preventDefault();
+    authBlock = document.querySelector('.auth_block');
+    authErrorBlock = document.querySelector('.auth-reg-error');
     const data = new URLSearchParams();
     const formElements = event.target.elements;
     data.append('username', formElements.username.value);
@@ -155,16 +160,22 @@ function makeAuth(event){
     xhr.send(data);
     xhr.onload = function() {
         if (xhr.status == 204){
+            authErrorBlock.style.display = 'none';
             location.reload();
         }
         else{
-            alert('Неверная почта или пароль');
+            authErrorBlock.style.display = 'block';
+            authErrorBlock.textContent = 'Неверная почта или пароль';
+            authBlock.style.animation = 'shake 0.7s 1';
         }
     };
+    authBlock.style.animation = 'none';
 };
 
 function makeReg(event){
     event.preventDefault();
+    authBlock = document.querySelector('.auth_block');
+    authErrorBlock = document.querySelector('.auth-reg-error');
     const formElements = event.target.elements;
     const regInfo =
     {
@@ -184,10 +195,14 @@ function makeReg(event){
        let jsonText = JSON.parse(xhr.responseText);
        switch (xhr.status){
         case 400:
-            alert('Пользователь с введной почтой уже существует');
+            authErrorBlock.style.display = 'block';
+            authErrorBlock.textContent = 'Пользователь с введной почтой уже существует';
+            authBlock.style.animation = 'shake 0.7s 1';
             break;
         case 422:
-            alert('Неверный формат введеной вами электронной почты');
+            authErrorBlock.style.display = 'block';
+            authErrorBlock.textContent = 'Неверный формат введеной электронной почты';
+            authBlock.style.animation = 'shake 0.7s 1';
             break;
         case 201:
             let autReq = new XMLHttpRequest();
@@ -196,21 +211,23 @@ function makeReg(event){
             autReq.send(authData);
             autReq.onload = function() {
                 if (autReq.status == 204){
+                    authErrorBlock.style.display = 'none';
                     location.reload();
                 }
             };
        }
     };
+    authBlock.style.animation = 'none';
 };
 
 function getRegForm () {
     let auth_block = document.querySelector('.auth_block');
-    auth_block.style.height = '455px';
+    auth_block.style.height = '465px';
     auth_block.innerHTML = authFormContentReg;
 };
 
 function getAuthForm () {
     let auth_block = document.querySelector('.auth_block');
-    auth_block.style.height = '320px';
+    auth_block.style.height = '330px';
     auth_block.innerHTML = authFormContentAuth;
 }

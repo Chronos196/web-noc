@@ -56,7 +56,7 @@
                         <input type="text" placeholder="Поиск">
                         <img src="../static/img/search.svg" height="25px" width="25px" class="search-icon">
                     </div>
-                    <button id="add_request" {%- if not user -%} style="display:none;"{%- endif -%}>Добавить заявку</button>
+                    <button id="add_request" {%- if not user or user.is_superuser -%} style="display:none;"{%- endif -%}>Добавить заявку</button>
                     <a href="/profile" class="{%- if user -%}profile{%- else-%}profile_not_auth{%- endif-%}">
                         {%- if user -%}
                         <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>

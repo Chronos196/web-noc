@@ -27,12 +27,24 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    padding: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
     border-radius: 10px;
     margin-bottom: 50px;
     margin-left: 20px;
+}
+
+.project_list_item:hover{
+    transform: scale(1.05);
+    transition: transform .5s;
+}
+
+.project_list_item_link{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 700px;
+    height: inherit;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .project_list_item_link p{
