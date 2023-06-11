@@ -1,3 +1,5 @@
+const loadingContent = `<p>Loading...</p>`
+
 const authFormContentReg = `
 <form action="/auth/register" method="post" class="reg_form" onsubmit="makeReg(event)">
     <div class="registration_open">
@@ -46,7 +48,7 @@ const authFormContentAuth = `
     </div>
 </form>`
 
-let menuElements = document.querySelectorAll('.nav-item-link');
+let mainElement = document.querySelector('main');
 let blackoutForm = document.getElementById('blackout');
 let addReqForm = document.getElementById('form');
 let addReqButton = document.getElementById('add_request');
@@ -78,58 +80,55 @@ blackoutForm.onclick = () => {
     addReqForm.style.display = 'none';
     let auth_block = document.querySelector('div.auth_block');
     let uniquenessBlock = document.querySelector('.uniqueness_details');
+    let avatarsBlock = document.querySelector('.show-avatar-options');
     if (auth_block){
         auth_block.parentNode.removeChild(auth_block);}
-    if (uniquenessBlock){
+    else if (uniquenessBlock){
         uniquenessBlock.parentNode.removeChild(uniquenessBlock);}
+    else if (avatarsBlock){
+        avatarsBlock.parentNode.removeChild(avatarsBlock);}
     else{
     location.reload();}
 };
 
-menuElements.forEach(element => {
-    element.addEventListener('click', () => {
-        menuElements.forEach(el => el.classList.remove('active'));
-        element.classList.add('active');
-    });
-});
-
-
 form.addEventListener('submit', function(event) {
     event.preventDefault();
+    showLoading();
     var formData = new FormData(form);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/upload_file');
     xhr.send(formData);
     xhr.onload = function() {
+        deleteLoading();
         var jsonText = JSON.parse(xhr.responseText);
         var text = form.querySelector('.form-text');
         console.log(xhr.responseText);
         if (jsonText['detail'] === "Unauthorized"){
             text.innerHTML = `<font color='red'>Что бы отправить файл, нужно авторизоваться</font>`;
-            addReqForm.style.animation = "shake 0.7s 1";
+            startAnimation('#form');
         }
         if (jsonText['status'] === "DirectionEmpty"){
             text.innerHTML = `<font color='red'>В файле <b>${jsonText["filename"]}</b> не указано Направление проекта</font>`;
-            addReqForm.style.animation = "shake 0.7s 1";
+            startAnimation('#form');
         }
         if (jsonText['status'] === "InvalidExtension"){
             text.innerHTML = `<font color='red'>Файл <b>${jsonText["filename"]}</b> имеет не верный формат. Необходим формат <b>.docx</b></font>`;
-            addReqForm.style.animation = "shake 0.7s 1";
+            startAnimation('#form');
         }
         if (jsonText['status'] === "Success"){
             text.innerHTML = `Файл <b>${jsonText["filename"]}</b> был успешно отправлен`;
         } 
         else if (jsonText['status'] === "EmptyFile"){
             text.innerHTML = `<font color='red'>Вы не выбрали файл, либо он оказался пустым</font>`;
-            addReqForm.style.animation = "shake 0.7s 1";
+            startAnimation('#form');
         }
         else if (jsonText['status'] === "TooMuch"){
             text.innerHTML = `<font color='red'>Файл <b>${jsonText["filename"]}</b> превышает допустимый размер</font>`;
-            addReqForm.style.animation = "shake 0.7s 1";
+            startAnimation('#form');
         }
         form.reset();
     };
-    addReqForm.style.animation = "none";
+    cancelAnimation('#form');
 });
 
 if (notAuthForm){
@@ -139,7 +138,6 @@ if (notAuthForm){
         evt.preventDefault();
         auth_block.style.height = '455px';
         blackoutForm.style.display = 'block';
-        let mainElement = document.querySelector('main');
         auth_block.innerHTML = authFormContentReg;
         mainElement.parentNode.insertBefore(auth_block, mainElement.nextSibling);
     });
@@ -147,8 +145,7 @@ if (notAuthForm){
 
 function makeAuth(event){
     event.preventDefault();
-    authBlock = document.querySelector('.auth_block');
-    authErrorBlock = document.querySelector('.auth-reg-error');
+    showLoading();
     const data = new URLSearchParams();
     const formElements = event.target.elements;
     data.append('username', formElements.username.value);
@@ -159,30 +156,30 @@ function makeAuth(event){
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(data);
     xhr.onload = function() {
+        deleteLoading();
         if (xhr.status == 204){
-            authErrorBlock.style.display = 'none';
+            hiddenElement('.auth-reg-error');
             location.reload();
         }
         else{
-            authErrorBlock.style.display = 'block';
-            authErrorBlock.textContent = 'Неверная почта или пароль';
-            authBlock.style.animation = 'shake 0.7s 1';
+            showAuthOrRegError('Неверная почта или пароль')
+            startAnimation('.auth_block');
         }
     };
-    authBlock.style.animation = 'none';
+    cancelAnimation('.auth_block');
 };
 
 function makeReg(event){
     event.preventDefault();
-    authBlock = document.querySelector('.auth_block');
-    authErrorBlock = document.querySelector('.auth-reg-error');
+    showLoading();
     const formElements = event.target.elements;
     const regInfo =
     {
         "email" : formElements.email.value,
         "password" : formElements.password.value,
         "name" : formElements.name.value,
-        "surname" : formElements.surname.value
+        "surname" : formElements.surname.value,
+        "avatar_name": "default"
     }
     const authData = new URLSearchParams();
     authData.append('username', formElements.email.value);
@@ -192,17 +189,15 @@ function makeReg(event){
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(regInfo));
     xhr.onload = function() {
-       let jsonText = JSON.parse(xhr.responseText);
+        deleteLoading();
        switch (xhr.status){
         case 400:
-            authErrorBlock.style.display = 'block';
-            authErrorBlock.textContent = 'Пользователь с введной почтой уже существует';
-            authBlock.style.animation = 'shake 0.7s 1';
+            startAnimation('.auth_block');
+            showAuthOrRegError('Пользователь с введной почтой уже существует');
             break;
         case 422:
-            authErrorBlock.style.display = 'block';
-            authErrorBlock.textContent = 'Неверный формат введеной электронной почты';
-            authBlock.style.animation = 'shake 0.7s 1';
+            startAnimation('.auth_block');
+            showAuthOrRegError('Неверный формат введеной электронной почты');
             break;
         case 201:
             let autReq = new XMLHttpRequest();
@@ -211,13 +206,13 @@ function makeReg(event){
             autReq.send(authData);
             autReq.onload = function() {
                 if (autReq.status == 204){
-                    authErrorBlock.style.display = 'none';
+                    hiddenElement('.auth-reg-error');
                     location.reload();
                 }
             };
        }
     };
-    authBlock.style.animation = 'none';
+    cancelAnimation('.auth_block');
 };
 
 function getRegForm () {
@@ -230,4 +225,38 @@ function getAuthForm () {
     let auth_block = document.querySelector('.auth_block');
     auth_block.style.height = '330px';
     auth_block.innerHTML = authFormContentAuth;
+}
+
+function hiddenElement(hiddenElementSelector){
+    hiddenBlock = document.querySelector(hiddenElementSelector);
+    hiddenBlock.style.display = 'none';
+}
+
+function startAnimation(animationBlockSelector) {
+    animationBlock = document.querySelector(animationBlockSelector);
+    animationBlock.style.animation = 'shake 0.7s 1';
+}
+
+function cancelAnimation(animationBlockSelector){
+    animationBlock = document.querySelector(animationBlockSelector);
+    animationBlock.style.animation = 'none';
+}
+
+function showAuthOrRegError(errorText){
+    let authErrorBlock = document.querySelector('.auth-reg-error');
+    authErrorBlock.style.display = 'block';
+    authErrorBlock.textContent = errorText;
+}
+
+function showLoading (){
+    let loadingBlock = document.createElement('div');
+    let mainElement = document.querySelector('main');
+    loadingBlock.classList.add('loading');
+    loadingBlock.innerHTML = loadingContent;
+    mainElement.parentNode.insertBefore(loadingBlock, mainElement.nextSibling);
+}
+
+function deleteLoading (){
+    let loadingBlock = document.querySelector('.loading');
+    loadingBlock.parentNode.removeChild(loadingBlock);
 }

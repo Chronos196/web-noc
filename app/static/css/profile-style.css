@@ -96,6 +96,12 @@ tr, .no_standart_td{
     color: #456086;
     cursor: pointer;
 }
+
+.upload-avatar-image:hover{
+    transform: scale(1.15);
+    transition: transform .5s;
+}
+
 .lk-initials{
     display: flex;
     flex-direction: column;
@@ -161,6 +167,74 @@ tr, .no_standart_td{
     justify-content: center;
 }
 
-#d-photo{
-    display: none;
+.button-save button:hover{
+    background-color: #FFFFFF;
+    color: #456086;
+    border: thin solid #456086;
+}
+
+.show-avatar-options{
+    z-index: 150;
+    width: 600px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    color: #456086;
+    border: 5px solid;
+    animation: animatedGradient 5s linear infinite;
+    border-image-slice: 1;
+}
+
+@keyframes animatedGradient {
+    0% {
+      border-image-source: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    }
+    14% {
+      border-image-source: linear-gradient(to right, violet,  red, orange, yellow, green, blue, indigo);
+    }
+    28% {
+        border-image-source: linear-gradient(to right, indigo, violet,  red, orange, yellow, green, blue);
+    }
+    42% {
+        border-image-source: linear-gradient(to right, blue, indigo, violet,  red, orange, yellow, green);
+    }
+    56% {
+        border-image-source: linear-gradient(to right, green, blue, indigo, violet,  red, orange, yellow);
+    }
+    70% {
+        border-image-source: linear-gradient(to right, yellow, green, blue, indigo, violet,  red, orange);
+    }
+    84% {
+        border-image-source: linear-gradient(to right, orange, yellow, green, blue, indigo, violet,  red);
+    }
+    100% {
+      border-image-source: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    }
+}
+
+.show-avatar-options p{
+    font-size: 14px;
+    color: #A7A7A7;
+}
+
+.avatar-option{
+    cursor: pointer;
+}
+
+.avatar-option:hover{
+    transform: scale(1.15);
+    transition: transform .5s;
+}
+
+.avatar-options{
+    margin: auto;
+    display: flex;
+    gap: 15px;
 }

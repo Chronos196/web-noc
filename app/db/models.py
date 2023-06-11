@@ -33,6 +33,7 @@ class User(BeanieBaseUser, Document):
     is_verified: bool = False
     projects: List[models.ID] = []
     applications: List[models.ID] = []
+    avatar_name: str = 'default'
 
 
 class Direction():

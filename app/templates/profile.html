@@ -13,16 +13,16 @@
                 </div>
                 <ul class="nav-items">
                     <li class="nav-item">
-                        <a href="./statistic" class="nav-item-link" id="nav-item-1">
-                            <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
-                            <span>Статистика</span>
+                        <a href="./noc" class="nav-item-link" id="nav-item-1">
+                            <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>НОЦ</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="./noc" class="nav-item-link" id="nav-item-2">
-                            <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
-                            <span>НОЦ</span>
+                        <a href="./statistic" class="nav-item-link" id="nav-item-2">
+                            <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
+                            <span>Статистика</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
@@ -60,7 +60,7 @@
                     <button id="add_request" {%- if not user or user.is_superuser -%} style="display:none;"{%- endif -%}>Добавить заявку</button>
                     <a href="./profile" class="profile">
                         <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
-                        <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                        <img src="../static/img/{{ user.avatar_name }}.png" class="profile-icon" alt="Аватарка" width="50px" height="50px">
                     </a>
                 </div>
             </div>
@@ -70,13 +70,12 @@
                     <div class="lk-1">
                         <h3 class="lk-profile">Профиль</h3>
                         <div class="avatar">
-                            <img  src="../static/img/avatar.svg" class="lk-profile-icon" alt = "аватарка" width="61px" height="61px" class="avatar-icon">
-                            <label for="d-photo" class="upload-avatar-image"><span>Загрузить фото</span></label>
-                            <input type="file" id="d-photo" name="file" accept=".jpeg,.png,.pic">
+                            <img  src="../static/img/{{ user.avatar_name}}.png" class="lk-profile-icon" alt = "аватарка" width="61px" height="61px" class="avatar-icon">
+                            <button class="upload-avatar-image" type="button">Выбрать аватар</button>
                         </div>
                         <div class="lk-initials">
-                            <input type = "text" placeholder="{{ user.name.title()}}" class="name">
-                            <input type = "text" placeholder="{{ user.surname.title()}}" class="surname">
+                            <input type = "text" placeholder="{{ user.name.title()}}" class="name" name="name">
+                            <input type = "text" placeholder="{{ user.surname.title()}}" class="surname" name="surname">
                         </div>
                     </div>
                     <div class="lk-2">
@@ -93,11 +92,11 @@
                             </div>
                             <div class = "all-data">
                                 <img src = "../static/img/mail.svg" widthg="20px" heihgt="16px" class="icon-img">
-                                <input type = "email" placeholder="{{ user.email}}" class="data-text">
+                                <input type = "email" placeholder="{{ user.email}}" class="data-text" name="email">
                             </div>
                             <div class = "all-data">
                                  <img src = "../static/img/password.svg" width="24px" heihgt="23px" class="icon-img">
-                                 <input type = "text"  placeholder="Смена пароля" class="data-text">
+                                 <input type = "password"  placeholder="Смена пароля" class="data-text" name="password">
                             </div>
                         </div>
                     </div>

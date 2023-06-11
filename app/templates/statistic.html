@@ -12,16 +12,16 @@
                 </div>
                 <ul class="nav-items">
                     <li class="nav-item">
-                        <a href="./statistic" class="nav-item-link active" id="nav-item-1">
-                            <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
-                            <span>Статистика</span>
+                        <a href="./noc" class="nav-item-link" id="nav-item-1">
+                            <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
+                            <span>НОЦ</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="./noc" class="nav-item-link" id="nav-item-2">
-                            <img src="../static/img/square.svg" class="nav-item-icon"  width="18px" height="18px">
-                            <span>НОЦ</span>
+                        <a href="./statistic" class="nav-item-link active" id="nav-item-2">
+                            <img src="../static/img/category.svg" class="nav-item-icon" width="18px" height="18px">
+                            <span>Статистика</span>
                             <img src="../static/img/active_link.svg" class="nav_active_item" width="36px" height="36px">
                         </a>
                     </li>
@@ -60,7 +60,7 @@
                     <a href="/profile" class="{%- if user -%}profile{%- else-%}profile_not_auth{%- endif-%}">
                         {%- if user -%}
                         <span>{{ user.surname.title()}}<br> {{user.name.title()}}</span>
-                        <img src="../static/img/space.jpg" class="profile-icon" alt="Аватарка" width="50px" height="50px">
+                        <img src="../static/img/{{ user.avatar_name}}.png" class="profile-icon" alt="Аватарка" width="50px" height="50px">
                         {%- else -%}
                         <span>Вход</span>
                         {%- endif -%}
